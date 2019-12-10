@@ -1,0 +1,60 @@
+# depslib dependency file v1.0
+1575298275 source:c:\users\xiann\onedrive\documents\ics3u\summative\databasefunctions.cpp
+
+1575298302 source:c:\users\xiann\onedrive\documents\ics3u\summative\filefunctions.cpp
+
+1575298870 source:c:\users\xiann\onedrive\documents\ics3u\summative\summativeallegro.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"headers.h"
+
+1575298905 c:\users\xiann\onedrive\documents\ics3u\summative\headers.h
+
+1575298275 source:c:\ics3u\summative\databasefunctions.cpp
+
+1575947807 source:c:\ics3u\summative\filefunctions.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"headers.h"
+
+1575947570 source:c:\ics3u\summative\summativeallegro.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+
+1575989889 c:\ics3u\summative\headers.h
+
+1575330821 source:c:\ics3u\summative\summative.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"headers.h"
+
+1575989976 source:c:\ics3u\summative\summativemain.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"headers.h"
+
+1575838352 source:c:\ics3u\summative\initialize.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"headers.h"
+
