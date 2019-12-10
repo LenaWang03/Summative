@@ -25,10 +25,10 @@ int main(int argc, char *argv[]) {
     ALLEGRO_DISPLAY *display = nullptr;
     bool playing = true;
     bool gameplay = true;
-    ALLEGRO_FONT *font = al_load_ttf_font("Moon Flower Bold.ttf", 36, 0);
+    ALLEGRO_FONT *font = al_load_ttf_font("Moon Flower Bold.ttf", 100, 0);
     Character player;
     LevelBG one;
-    int phase = 1;
+    int phase = 0;
     // sets up allegro and
     checkSetup(display, font);
     // sets up beginning of the level
@@ -41,9 +41,9 @@ int main(int argc, char *argv[]) {
         }
         switch(phase) {
         case 0:
-            al_draw_text(font, WHITE, 100, 100, 0, "THE PLANT KING!");
+            al_draw_text(font, WHITE, 300, 400, 0, "THE PLANT KING!");
             al_flip_display();
-            if (al_key_down(&keyState, ALLEGRO_KEY_ESCAPE)) {
+            if (al_key_down(&keyState, ALLEGRO_KEY_ENTER)) {
                 phase = 1;
             }
             break;
@@ -60,15 +60,13 @@ int main(int argc, char *argv[]) {
                 // prints everything to the screen
                 al_flip_display();
             }
-            printf ("Yay");
             break;
-
         case 3:
             al_clear_to_color(background);
-            al_draw_text(font, WHITE, 100, 100, 0, "Finish, PRESS ENTER");
+            al_draw_text(font, WHITE, 300, 400, 0, "Finish, PRESS ENTER");
             al_flip_display();
             if (al_key_down(&keyState, ALLEGRO_KEY_ENTER)) {
-            playing = false;
+                playing = false;
             }
             break;
         }
