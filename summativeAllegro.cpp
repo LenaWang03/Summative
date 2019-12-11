@@ -35,8 +35,6 @@ bool loadObjectImage(Object &image) {
 // sets the character and the background
 void setupLevel(LevelBG &o, Character &b) {
     // setting values to variables
-    b.x = 110;
-    b.y = 50;
     for (int i = 0; i < 10; i++){
         o.chairsF[i].filename = "chairF.png";
         o.desks[i].filename = "table.png";
@@ -47,22 +45,32 @@ void setupLevel(LevelBG &o, Character &b) {
     if (o.background.bitmap == nullptr) {
         printf("Image background couldn't load");
     }
-    loadCharacterImage(b, "main.png");
     // prints chairs to the screen
+    getCharacter(b);
     getObjects(o);
-    drawObjects(o.desks);
     drawObjects(o.chairsF);
+    drawObjects(o.desks);
     drawObject(o.door);
+}
+void getCharacter(Character &a){
+    loadCharacterImage(a, "main.png");
+    FILE *coordinates;
+    coordinates = fopen ("character.txt", "r");
+    fscanf(coordinates, "%d", &a.x);
+    fscanf(coordinates, "%d", &a.y);
+    fclose(coordinates);
 }
 void getObjects(LevelBG &o) {
     FILE *coordinates;
     coordinates = fopen ("setUp.txt", "r");
-    for (int i = 0; i <2; i++) {
+    fscanf(coordinates, "%d", &o.chairsF[0].amount);
+    for (int i = 0; i <7; i++) {
         loadObjectImage(o.chairsF[i]);
         fscanf(coordinates, "%d", &o.chairsF[i].x);
         fscanf(coordinates, "%d", &o.chairsF[i].y);
     }
-    for (int i = 0; i <2; i++) {
+    fscanf(coordinates, "%d", &o.desks[0].amount);
+    for (int i = 0; i <o.desks[0].amount; i++) {
         loadObjectImage(o.desks[i]);
         fscanf(coordinates, "%d", &o.desks[i].x);
         fscanf(coordinates, "%d", &o.desks[i].y);
@@ -74,7 +82,7 @@ void getObjects(LevelBG &o) {
 }
 
 void drawObjects(Object a[]) {
-    for (int i = 0; i <2; i++) {
+    for (int i = 0; i <a[0].amount; i++) {
         al_draw_scaled_bitmap(a[i].bitmap,0,0, al_get_bitmap_width(a[i].bitmap),al_get_bitmap_height(a[i].bitmap),a[i].x,a[i].y,al_get_bitmap_width(a[i].bitmap)/3,al_get_bitmap_height(a[i].bitmap)/3, 0);
     }
 }

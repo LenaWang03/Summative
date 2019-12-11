@@ -54,7 +54,6 @@ storeCollision isObjectCollision(Character &a, Object b) {
     calcBounds(a);
     calcObjectBounds(b);
     storeCollision answer;
-    //calcObjectBounds(c[i]);
     if (a.bottom > b.top && a.bottom < b.bottom  - 3&& a.left < b.right - 23 && a.right > b.left + 23) {
         answer.d = true;
     } else {
@@ -78,21 +77,21 @@ storeCollision isObjectCollision(Character &a, Object b) {
     return answer;
 }
 
-storeCollision compareCollision(Character &a, Object b[], Object c[], int chairNum, int deskNum) {
+storeCollision compareCollision(Character &a, Object b[], Object c[]) {
     storeCollision collisionType;
     storeCollision answer;
     answer.u = false;
     answer.d = false;
     answer.l = false;
     answer.r = false;
-    for (int i = 0; i <chairNum; i++) {
+    for (int i = 0; i <b[0].amount; i++) {
         collisionType = isObjectCollision(a, b[i]);
         answer.u |= collisionType.u;
         answer.d |= collisionType.d;
         answer.r |= collisionType.r;
         answer.l |= collisionType.l;
     }
-    for (int i = 0; i <deskNum; i++) {
+    for (int i = 0; i <c[0].amount; i++) {
         collisionType = isObjectCollision(a, c[i]);
         answer.u |= collisionType.u;
         answer.d |= collisionType.d;
@@ -136,3 +135,4 @@ bool endLevel(Character a, Object d) {
     }
     return false;
 }
+

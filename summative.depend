@@ -60,7 +60,7 @@
 
 1575298275 source:c:\ics3u\summative\summative(github)\databasefunctions.cpp
 
-1575947807 source:c:\ics3u\summative\summative(github)\filefunctions.cpp
+1576079738 source:c:\ics3u\summative\summative(github)\filefunctions.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -68,9 +68,9 @@
 	<allegro5/allegro_native_dialog.h>
 	"headers.h"
 
-1575989889 c:\ics3u\summative\summative(github)\headers.h
+1576079758 c:\ics3u\summative\summative(github)\headers.h
 
-1575947570 source:c:\ics3u\summative\summative(github)\summativeallegro.cpp
+1576079554 source:c:\ics3u\summative\summative(github)\summativeallegro.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -79,7 +79,7 @@
 	"allegro5/allegro_image.h"
 	"headers.h"
 
-1575996610 source:c:\ics3u\summative\summative(github)\summativemain.cpp
+1576080026 source:c:\ics3u\summative\summative(github)\summativemain.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>

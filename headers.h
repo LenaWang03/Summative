@@ -28,6 +28,7 @@ struct Object {
     const char *filename;
     int x,y;
     int right, left, top, bottom;
+    int amount;
 };
 struct LevelBG {;
     Background background;
@@ -44,15 +45,17 @@ bool loadCharacterImage(Character &image, const char *filename);
 bool loadObjectImage(Object &image);
 storeCollision isBackgroundCollision(Character &a);
 storeCollision isObjectCollision(Character &a, Object b);
-storeCollision compareCollision(Character &a, Object b[], Object c[], int chairNum, int deskNum);
+storeCollision compareCollision(Character &a, Object b[], Object c[]);
 void calcBounds(Character &a);
 void calcObjectBounds(Object &a);
 void calcDoorBounds(Object &a);
+void getCharacter(Character &a);
 void getObjects(LevelBG &o);
 void drawObjects(Object a[]);
 void drawObject(Object a);
 void drawDesk(Object a[]);
 bool endLevel(Character a, Object d);
+
 
 
 

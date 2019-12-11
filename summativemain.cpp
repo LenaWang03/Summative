@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
     ALLEGRO_COLOR background = al_map_rgb(0, 0, 0);
     ALLEGRO_DISPLAY *display = nullptr;
     bool playing = true;
-    bool gameplay = true;
     ALLEGRO_FONT *font = al_load_ttf_font("Moon Flower Bold.ttf", 100, 0);
     Character player;
     LevelBG one;
@@ -45,21 +44,17 @@ int main(int argc, char *argv[]) {
             al_flip_display();
             if (al_key_down(&keyState, ALLEGRO_KEY_ENTER)) {
                 phase = 1;
+                setupLevel(one, player);
             }
             break;
         case 1:
-            setupLevel(one, player);
-            while (gameplay) {
                 // moves character and calculates the collision restrictions
-                moveCharacter(player, one, compareCollision(player, one.chairsF, one.desks, 2, 2));
-
+                moveCharacter(player, one, compareCollision(player, one.chairsF, one.desks));
                 if (endLevel(player, one.door)) {
                     phase = 3;
-                    gameplay = false;
                 }
                 // prints everything to the screen
                 al_flip_display();
-            }
             break;
         case 3:
             al_clear_to_color(background);
