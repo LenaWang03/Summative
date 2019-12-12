@@ -80,7 +80,6 @@ storeCollision isObjectCollision(Character &a, Object b) {
     }
     return answer;
 }
-
 storeCollision compareCollision(Character &a, Object b[], Object c[]) {
     storeCollision collisionType;
     storeCollision answer;
@@ -132,6 +131,27 @@ void moveCharacter(Character &player, LevelBG o, storeCollision c) {
     al_draw_bitmap(player.bitmap,player.x,player.y, 0);
 }
 
+void moveEnemy(Character &a, LevelBG o, storeCollision c) {
+    srand(time(0));
+    // Waits a certain amount of time depending on what the FPS was set to
+    al_rest(1/FPS);
+    // Change the coordinates of the image
+    if (!c.r){
+        a.x += 1;
+    }
+    if (!c.l){
+        a.x -= 1;
+    }
+    if (!c.u){
+        a.y -= 1;
+    }
+    if (!c.d){
+        a.y += 1;
+    }
+    al_draw_scaled_bitmap(a.bitmap,0,0, al_get_bitmap_width(a.bitmap),al_get_bitmap_height(a.bitmap),a.x,a.y,al_get_bitmap_width(a.bitmap)/3,al_get_bitmap_height(a.bitmap)/3, 0);
+}
+
+
 bool endLevel(Character a, Object d) {
     calcDoorBounds(d);
     if (a.bottom > d.top && a.bottom < d.bottom && a.left < d.right && a.right > d.left ) {
@@ -139,24 +159,5 @@ bool endLevel(Character a, Object d) {
     }
     return false;
 }
-
-void moveEnemy(Character &a, LevelBG o, storeCollision c) {
-    srand(time(0));
-    // Waits a certain amount of time depending on what the FPS was set to
-    al_rest(1/FPS);
-    // Change the coordinates of the image if the corresponding key is pressed down
-    if (!c.r){
-        a.x += 2;
-    }
-    if (!c.l){
-        a.x -= 2;
-    }
-    if (!c.u)
-        a.y -= 2;
-    if (!c.d)
-        a.y += 2;
-    al_draw_scaled_bitmap(a.bitmap,0,0, al_get_bitmap_width(a.bitmap),al_get_bitmap_height(a.bitmap),a.x,a.y,al_get_bitmap_width(a.bitmap)/3,al_get_bitmap_height(a.bitmap)/3, 0);
-}
-
 
 

@@ -67,7 +67,7 @@ void getObjects(LevelBG &o) {
     FILE *coordinates;
     coordinates = fopen ("setUp.txt", "r");
     fscanf(coordinates, "%d", &o.chairsF[0].amount);
-    for (int i = 0; i <7; i++) {
+    for (int i = 0; i <o.chairsF[0].amount; i++) {
         loadObjectImage(o.chairsF[i]);
         fscanf(coordinates, "%d", &o.chairsF[i].x);
         fscanf(coordinates, "%d", &o.chairsF[i].y);
