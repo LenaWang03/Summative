@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
     bool playing = true;
     ALLEGRO_FONT *font = al_load_ttf_font("Moon Flower Bold.ttf", 100, 0);
     Character player;
+    Character enemy;
     LevelBG one;
     int phase = 0;
     // sets up allegro and
@@ -44,12 +45,13 @@ int main(int argc, char *argv[]) {
             al_flip_display();
             if (al_key_down(&keyState, ALLEGRO_KEY_ENTER)) {
                 phase = 1;
-                setupLevel(one, player);
+                setupLevel(one, player, enemy);
             }
             break;
         case 1:
                 // moves character and calculates the collision restrictions
                 moveCharacter(player, one, compareCollision(player, one.chairsF, one.desks));
+                moveEnemy(enemy, one, compareCollision(player, one.chairsF, one.desks));
                 if (endLevel(player, one.door)) {
                     phase = 3;
                 }

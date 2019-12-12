@@ -15,10 +15,10 @@ void initializeAllegro() {
     al_init_ttf_addon();
 }
 // loads image for characters
-bool loadCharacterImage(Character &image, const char *filename) {
-    image.bitmap = al_load_bitmap(filename);
+bool loadCharacterImage(Character &image) {
+    image.bitmap = al_load_bitmap(image.filename);
     if (image.bitmap == nullptr) {
-        printf ("Image %s couldn't load", filename);
+        printf ("Image %s couldn't load", image.filename);
         return false;
     }
     return true;
@@ -33,13 +33,15 @@ bool loadObjectImage(Object &image) {
     return true;
 }
 // sets the character and the background
-void setupLevel(LevelBG &o, Character &b) {
+void setupLevel(LevelBG &o, Character &b, Character &c) {
     // setting values to variables
     for (int i = 0; i < 10; i++){
         o.chairsF[i].filename = "chairF.png";
         o.desks[i].filename = "table.png";
     }
     o.door.filename = "door.png";
+    b.filename = "main.png";
+    c.filename = "chairS.png";
     // loading background images
     o.background.bitmap = al_load_bitmap("background.png");
     if (o.background.bitmap == nullptr) {
@@ -47,13 +49,14 @@ void setupLevel(LevelBG &o, Character &b) {
     }
     // prints chairs to the screen
     getCharacter(b);
+    getCharacter(c);
     getObjects(o);
     drawObjects(o.chairsF);
     drawObjects(o.desks);
     drawObject(o.door);
 }
 void getCharacter(Character &a){
-    loadCharacterImage(a, "main.png");
+    loadCharacterImage(a);
     FILE *coordinates;
     coordinates = fopen ("character.txt", "r");
     fscanf(coordinates, "%d", &a.x);
