@@ -41,7 +41,7 @@ void setupLevel(LevelBG &o, Character &b, Character &c) {
     }
     o.door.filename = "door.png";
     b.filename = "main.png";
-    c.filename = "chairS.png";
+    c.filename = "enemy.png";
     // loading background images
     o.background.bitmap = al_load_bitmap("background.png");
     if (o.background.bitmap == nullptr) {
@@ -63,6 +63,7 @@ void getCharacter(Character &a){
     fscanf(coordinates, "%d", &a.y);
     fclose(coordinates);
 }
+// retrieves coordinates and image files
 void getObjects(LevelBG &o) {
     FILE *coordinates;
     coordinates = fopen ("setUp.txt", "r");
@@ -84,18 +85,21 @@ void getObjects(LevelBG &o) {
     fclose(coordinates);
 }
 
+// uses the set clipping dimensions and prints an array of objects to the screen
 void drawObjects(Object a[]) {
     for (int i = 0; i <a[0].amount; i++) {
         al_draw_scaled_bitmap(a[i].bitmap,0,0, al_get_bitmap_width(a[i].bitmap),al_get_bitmap_height(a[i].bitmap),a[i].x,a[i].y,al_get_bitmap_width(a[i].bitmap)/3,al_get_bitmap_height(a[i].bitmap)/3, 0);
     }
 }
+
+// uses the set clipping dimensions and prints an objects to the screen
 void drawObject(Object a) {
     al_draw_scaled_bitmap(a.bitmap,0,0, al_get_bitmap_width(a.bitmap),al_get_bitmap_height(a.bitmap),a.x,a.y,al_get_bitmap_width(a.bitmap)/3.5,al_get_bitmap_height(a.bitmap)/3.5, 0);
 }
 
+// checks if everything works, if it doesn't, it gives you an error message
 int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font) {
     // Check if your allegro routines worked successfully.
-
     if (!font) {
         al_show_native_message_box(display, "Error", "Error", "Could not load comic.ttf",
                                    nullptr, ALLEGRO_MESSAGEBOX_ERROR);

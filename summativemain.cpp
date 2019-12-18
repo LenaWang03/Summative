@@ -28,7 +28,11 @@ int main(int argc, char *argv[]) {
     Character player;
     Character enemy;
     LevelBG one;
+    srand(time(0));
+    int direction = rand()% 4+1;
+    int moveTime;
     int phase = 0;
+    moveTime = rand() % 2000+200;
     // sets up allegro and
     checkSetup(display, font);
     // sets up beginning of the level
@@ -41,7 +45,8 @@ int main(int argc, char *argv[]) {
         }
         switch(phase) {
         case 0:
-            al_draw_text(font, WHITE, 300, 400, 0, "THE PLANT KING!");
+            al_draw_text(font, WHITE, 320, 400, 0, "THE PLANT KING!");
+            al_draw_text(font, WHITE, 280, 500, 0, "EXIT THE ROOM TO WIN");
             al_flip_display();
             if (al_key_down(&keyState, ALLEGRO_KEY_ENTER)) {
                 phase = 1;
@@ -50,8 +55,9 @@ int main(int argc, char *argv[]) {
             break;
         case 1:
                 // moves character and calculates the collision restrictions
-                moveCharacter(player, one, compareCollision(player, one.chairsF, one.desks));
-                moveEnemy(enemy, one, compareCollision(player, one.chairsF, one.desks));
+                moveCharacter(player, one, compareCollision(player, one.chairsF, one.desks, enemy));
+                moveEnemy(enemy, one, compareCollision(enemy, one.chairsF, one.desks, player), direction, moveTime);
+                moveTime --;
                 if (endLevel(player, one.door)) {
                     phase = 3;
                 }
