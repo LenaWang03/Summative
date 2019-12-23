@@ -27,8 +27,8 @@ void calcObjectBounds(Object &a) {
 void calcEnemyBounds(Object &a) {
     a.left = a.x;
     a.top  = a.y;
-    a.right = a.left;
-    a.bottom = a.top;
+    a.right = a.left + 50;
+    a.bottom = a.top + 50;
 }
 // calculates background wall collisions
 storeCollision isBackgroundCollision(Character &a) {
@@ -133,7 +133,7 @@ void stopCollision (Character &player, storeCollision c){
 // made for the enemy since the enemy is an object
 storeCollision isEnemyBackgroundCollision(Object &a){
     storeCollision answer;
-    if (a.bottom > 740) {
+    if (a.bottom > 790) {
         answer.d = true;
     } else {
         answer.d = false;
@@ -143,7 +143,7 @@ storeCollision isEnemyBackgroundCollision(Object &a){
     }else{
         answer.u = false;
     }
-    if (a.right > 1130) {
+    if (a.right > 1180) {
         answer.r = true;
     }else{
         answer.r = false;

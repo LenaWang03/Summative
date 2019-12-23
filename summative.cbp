@@ -32,9 +32,11 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Collisions.cpp" />
 		<Unit filename="databaseFunctions.cpp" />
 		<Unit filename="fileFunctions.cpp" />
 		<Unit filename="headers.h" />
+		<Unit filename="setUp.cpp" />
 		<Unit filename="summativeAllegro.cpp" />
 		<Unit filename="summativemain.cpp" />
 		<Extensions>

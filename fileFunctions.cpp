@@ -9,6 +9,7 @@
 #include <time.h>
 #include <stdlib.h>
 
+
 // moves main character
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev) {
     calcBounds(player);

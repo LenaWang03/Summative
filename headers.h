@@ -1,6 +1,6 @@
 const int SCREEN_W = 1240;
 const int SCREEN_H = 1004;
-const float FPS = 80;
+const float FPS = 300;
 #define WHITE        al_map_rgb(255, 255, 255)
 
 struct Character {
