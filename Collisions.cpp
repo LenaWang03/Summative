@@ -19,16 +19,9 @@ void calcBounds(Character &a) {
 // calculates bounds for objects, it is different from others because the images are scaled
 void calcObjectBounds(Object &a) {
     a.left = a.x +5;
-    a.top  = a.y +5;
-    a.right = a.left + (al_get_bitmap_width(a.bitmap)-(al_get_bitmap_width(a.bitmap)*2/3))-10;
-    a.bottom = a.top + (al_get_bitmap_height(a.bitmap)-(al_get_bitmap_height(a.bitmap)*2/3))+5;
-}
-// calculates bounds for enemy
-void calcEnemyBounds(Object &a) {
-    a.left = a.x;
     a.top  = a.y;
-    a.right = a.left;
-    a.bottom = a.top;
+    a.right = a.left + (al_get_bitmap_width(a.bitmap)-(al_get_bitmap_width(a.bitmap)*2/3))-10;
+    a.bottom = a.top + (al_get_bitmap_height(a.bitmap)-(al_get_bitmap_height(a.bitmap)*2/3));
 }
 // calculates background wall collisions
 storeCollision isBackgroundCollision(Character &a) {
@@ -38,7 +31,7 @@ storeCollision isBackgroundCollision(Character &a) {
     } else {
         answer.d = false;
     }
-    if (a.top < 15) {
+    if (a.bottom < 180) {
         answer.u = true;
     }else{
         answer.u = false;
@@ -61,7 +54,7 @@ storeCollision isObjectCollision(Character &a, Object b) {
     // calculates the bounds by calling another function
     calcObjectBounds(b);
     storeCollision answer;
-    if (a.bottom > b.top && a.bottom < b.bottom  - 3&& a.left < b.right - 3 && a.right > b.left + 3) {
+    if (a.bottom > b.top && a.bottom < b.bottom  - 3 && a.left < b.right - 3 && a.right > b.left + 3) {
         answer.d = true;
     } else {
         answer.d = false;
@@ -71,7 +64,7 @@ storeCollision isObjectCollision(Character &a, Object b) {
     } else {
         answer.u = false;
     }
-    if (a.left < b.right && a.right > b.right + 3 && a.bottom < b.bottom - 3&&a.bottom > b.top + 3) {
+    if (a.left < b.right && a.right > b.right + 3 && a.bottom < b.bottom - 3 &&a.bottom > b.top + 3) {
         answer.l = true;
     } else {
         answer.l = false;
@@ -85,22 +78,23 @@ storeCollision isObjectCollision(Character &a, Object b) {
 }
 
 // looks at all the collisions and processes them
-storeCollision compareCollision(Character &a, Object b[], Object c[]) {
+storeCollision compareCollision(Character a, LevelBG b) {
     storeCollision collisionType;
     storeCollision answer;
     answer.u = false;
     answer.d = false;
     answer.l = false;
     answer.r = false;
-    for (int i = 0; i <b[0].amount; i++) {
-        collisionType = isObjectCollision(a, b[i]);
+    answer.enemy = false;
+    for (int i = 0; i <b.chairsF[0].amount; i++) {
+        collisionType = isObjectCollision(a, b.chairsF[i]);
         answer.u |= collisionType.u;
         answer.d |= collisionType.d;
         answer.r |= collisionType.r;
         answer.l |= collisionType.l;
     }
-    for (int i = 0; i <c[0].amount; i++) {
-        collisionType = isObjectCollision(a, c[i]);
+    for (int i = 0; i <b.desks[0].amount; i++) {
+        collisionType = isObjectCollision(a, b.desks[i]);
         answer.u |= collisionType.u;
         answer.d |= collisionType.d;
         answer.r |= collisionType.r;
@@ -111,6 +105,12 @@ storeCollision compareCollision(Character &a, Object b[], Object c[]) {
     answer.d |= collisionType.d;
     answer.r |= collisionType.r;
     answer.l |= collisionType.l;
+    for (int i = 0; i <b.enemy[0].amount; i++) {
+        collisionType = isObjectCollision(a, b.enemy[i]);
+        if ((collisionType.u == true) || (collisionType.d == true) ||(collisionType.r == true) ||(collisionType.l == true)){
+            answer.enemy |= true;
+        }
+    }
     return answer;
 }
 
@@ -138,17 +138,17 @@ storeCollision isEnemyBackgroundCollision(Object &a){
     } else {
         answer.d = false;
     }
-    if (a.bottom < 80) {
+    if (a.bottom < 180) {
         answer.u = true;
     }else{
         answer.u = false;
     }
-    if (a.right > 1130) {
+    if (a.right > 1210) {
         answer.r = true;
     }else{
         answer.r = false;
     }
-    if (a.left < 30) {
+    if (a.left < 20) {
         answer.l = true;
     }else{
         answer.l = false;
@@ -158,20 +158,20 @@ storeCollision isEnemyBackgroundCollision(Object &a){
 // calculates the collisions based on the object bounds
 storeCollision isEnemyObjectCollision(Object &a, Object b){
     // calculates the bounds by calling another function
-    calcEnemyBounds(a);
+    calcObjectBounds(a);
     calcObjectBounds(b);
     storeCollision answer;
-    if (a.bottom > b.top && a.bottom < b.bottom  - 3&& a.left < b.right - 3 && a.right > b.left + 3) {
+    if (a.bottom > b.top && a.bottom < b.bottom  - 1 && a.left < b.right - 1 && a.right > b.left + 1) {
         answer.d = true;
     } else {
         answer.d = false;
     }
-    if (a.bottom < b.bottom && a.bottom > b.top + 3 && a.left < b.right -3 && a.right > b.left + 3) {
+    if (a.bottom < b.bottom && a.bottom > b.top + 1 && a.left < b.right -1 && a.right > b.left + 1) {
         answer.u = true;
     } else {
         answer.u = false;
     }
-    if (a.left < b.right && a.right > b.right + 3 && a.bottom < b.bottom - 3&&a.bottom > b.top + 3) {
+    if (a.left < b.right && a.right > b.right + 1 && a.bottom < b.bottom - 1 &&a.bottom > b.top + 1) {
         answer.l = true;
     } else {
         answer.l = false;

@@ -17,6 +17,7 @@ struct storeCollision
     bool d;
     bool l;
     bool r;
+    bool enemy;
 };
 struct Object {
     ALLEGRO_BITMAP *bitmap;
@@ -24,6 +25,8 @@ struct Object {
     int x,y;
     int right, left, top, bottom;
     int amount;
+    ALLEGRO_BITMAP *frame[2];
+
 };
 struct LevelBG {;
     Object background;
@@ -33,33 +36,42 @@ struct LevelBG {;
     Object door;
 };
 
+struct Button {
+    ALLEGRO_BITMAP *bitmap;
+    int x,y;
+    const char *text;
+    bool click;
+};
+
 
 void initializeAllegro();
 int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue);
-void setupLevel(LevelBG &a, Character &b);
-bool loadCharacterImage(Character &a);
-void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev);
+void setupLevel(LevelBG &a, Character &b, Object &c);
+void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l);
 void calcBounds(Character &a);
 void calcObjectBounds(Object &a);
-bool loadCharacterImage(Character &a);
-bool loadObjectImage(Object &a);
+void loadCharacterImage(Character &a);
+void loadObjectImage(Object &a);
 storeCollision isBackgroundCollision(Character &a);
 storeCollision isObjectCollision(Character &a, Object b);
-storeCollision compareCollision(Character &a, Object b[], Object c[]);
+storeCollision compareCollision(Character a, LevelBG b);
 void getCharacter(Character &a);
 void getObjects(LevelBG &a);
 void drawObjects(Object a[]);
 void drawObject(Object a);
 void stopCollision (Character &player, storeCollision);
-void drawBG(LevelBG a);
+void drawBG(LevelBG a, Object &l);
 bool endLevel(Character a, Object d);
-void calcEnemyBounds(Object &a);
 int playerAnimation (Character a);
 void moveEnemy(Object a[], LevelBG b, int &d, int m, ALLEGRO_EVENT &ev);
 storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]);
 storeCollision isEnemyObjectCollision(Object &a, Object b);
 storeCollision isEnemyBackgroundCollision(Object &a);
-
+int enemyAnimation (Object a);
+void isHit(Character &a, LevelBG b, int hitCounter, Object &l);
+void drawLives(Object a);
+bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *font);
+void declareButtons(Button &start);
 
 
 

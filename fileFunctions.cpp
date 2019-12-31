@@ -8,9 +8,9 @@
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
 #include <stdlib.h>
-
+//int hitCounter = 100;
 // moves main character
-void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev) {
+void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l) {
     calcBounds(player);
     if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
         if (ev.keyboard.keycode == ALLEGRO_KEY_UP) {
@@ -39,6 +39,10 @@ void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT
             player.mRight = 0;
         }
     } else if (ev.type == ALLEGRO_EVENT_TIMER) {
+        drawBG(b, l);
+        for (int i = 0; i < b.enemy[0].amount; i++) {
+            enemyAnimation(b.enemy[i]);
+        }
         // makes the amount the player moves 0 in the direction that the collision is
         stopCollision(player, c);
         // applies the movement to the player
@@ -46,10 +50,8 @@ void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT
         player.posx += player.mRight;
         player.posy += player.mUp;
         player.posy += player.mDown;
-        drawBG(b);
         // animates and prints the player to the screen every tick
         playerAnimation(player);
-        al_flip_display();
     }
 }
 
@@ -80,8 +82,6 @@ void moveEnemy(Object a[], LevelBG b, int &d, int m, ALLEGRO_EVENT &ev) {
                 a[i].y += 1;
             }
         }
-        // draws image to display
-        al_draw_scaled_bitmap(a[i].bitmap,0,0, al_get_bitmap_width(a[i].bitmap),al_get_bitmap_height(a[i].bitmap),a[i].x,a[i].y,al_get_bitmap_width(a[i].bitmap)/3,al_get_bitmap_height(a[i].bitmap)/3, 0);
     }
 }
 

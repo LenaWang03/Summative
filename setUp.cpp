@@ -18,7 +18,7 @@ void initializeAllegro() {
 }
 
 // initializes the sprite names and gets the starting positions from text files and prints it to the screen
-void setupLevel(LevelBG &a, Character &b) {
+void setupLevel(LevelBG &a, Character &b, Object &c) {
     // setting values to variables
     for (int i = 0; i < 10; i++){
         a.chairsF[i].filename = "chairF.png";
@@ -28,32 +28,28 @@ void setupLevel(LevelBG &a, Character &b) {
     a.door.filename = "door.png";
     b.filename = "player.png";
     a.background.filename = "background.png";
+    c.filename = "heart.png";
+    c.amount = 3;
     // prints everything to the screen
     getCharacter(b);
     getObjects(a);
+    loadObjectImage(c);
     loadObjectImage(a.background);
-    drawBG(a);
-    al_draw_bitmap(b.frame[2], b.posx, b.posy, 0);
 }
 
 // loads character image
-bool loadCharacterImage(Character &a) {
+void loadCharacterImage(Character &a) {
     a.bitmap = al_load_bitmap(a.filename);
     if (a.bitmap == nullptr) {
         printf ("Image %s couldn't load", a.filename);
-        return false;
     }
-    return true;
 }
-
 // loads object image
-bool loadObjectImage(Object &a) {
+void loadObjectImage(Object &a) {
     a.bitmap = al_load_bitmap(a.filename);
     if (a.bitmap == nullptr) {
         printf("Image %s couldn't load", a.filename);
-        return false;
     }
-    return true;
 }
 
 // gets starting position and images for character
@@ -95,12 +91,20 @@ void getObjects(LevelBG &a) {
         loadObjectImage(a.enemy[i]);
         fscanf(coordinates, "%d", &a.enemy[i].x);
         fscanf(coordinates, "%d", &a.enemy[i].y);
+        for (int x=0; x<2; x++) {
+        a.enemy[i].frame[x] = al_create_sub_bitmap(a.enemy[i].bitmap, x*302.5 , 0 , 302.5, 393);
+        }
     }
     loadObjectImage(a.door);
     fscanf(coordinates, "%d", &a.door.x);
     fscanf(coordinates, "%d", &a.door.y);
     fclose(coordinates);
-
+}
+// draws in the hearts and updates them whenever the player loses a life
+void drawLives(Object a){
+    for(int i = 0; i < a.amount; i++){
+        al_draw_scaled_bitmap(a.bitmap,0,0, 224,192,900+(i*80),900,74,64, 0);
+    }
 }
 
 // checks everything in allegro to make sure they opened properly
