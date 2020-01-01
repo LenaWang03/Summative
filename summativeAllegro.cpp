@@ -62,7 +62,7 @@ int enemyAnimation (Object a) {
     frame = curr % 2;
     //al_draw_scaled_bitmap(a.frame[1],0,0, al_get_bitmap_width(a.frame[1]),al_get_bitmap_height(a.frame[1]),a.x,a.y,al_get_bitmap_width(a.frame[1])/3,al_get_bitmap_height(a.frame[1])/3, 0);
     al_draw_scaled_bitmap(a.frame[frame],0,0, al_get_bitmap_width(a.frame[0]),al_get_bitmap_height(a.frame[0]),a.x,a.y,al_get_bitmap_width(a.frame[0])/3,al_get_bitmap_height(a.frame[0])/3, 0);
-    return 0;
+    return frame;
 }
 
 void isHit(Character &a, LevelBG b, int hitCounter, Object &l) {

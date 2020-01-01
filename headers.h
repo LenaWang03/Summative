@@ -26,6 +26,8 @@ struct Object {
     int right, left, top, bottom;
     int amount;
     ALLEGRO_BITMAP *frame[2];
+    int direction;
+    int moveTime;
 
 };
 struct LevelBG {;
@@ -45,8 +47,8 @@ struct Button {
 
 
 void initializeAllegro();
-int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue);
-void setupLevel(LevelBG &a, Character &b, Object &c);
+int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue);
+void setupLevel(LevelBG &a, Character &b, Object &c, int l);
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l);
 void calcBounds(Character &a);
 void calcObjectBounds(Object &a);
@@ -56,22 +58,22 @@ storeCollision isBackgroundCollision(Character &a);
 storeCollision isObjectCollision(Character &a, Object b);
 storeCollision compareCollision(Character a, LevelBG b);
 void getCharacter(Character &a);
-void getObjects(LevelBG &a);
+void getObjects(LevelBG &a, int l);
 void drawObjects(Object a[]);
 void drawObject(Object a);
 void stopCollision (Character &player, storeCollision);
 void drawBG(LevelBG a, Object &l);
 bool endLevel(Character a, Object d);
 int playerAnimation (Character a);
-void moveEnemy(Object a[], LevelBG b, int &d, int m, ALLEGRO_EVENT &ev);
+void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev);
 storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]);
 storeCollision isEnemyObjectCollision(Object &a, Object b);
 storeCollision isEnemyBackgroundCollision(Object &a);
 int enemyAnimation (Object a);
 void isHit(Character &a, LevelBG b, int hitCounter, Object &l);
 void drawLives(Object a);
-bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *font);
-void declareButtons(Button &start);
+bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel);
+void declareButtons(Button &start, Button &menu, Button &exitGame, Button &resume, Button &nextLevel);
 
 
 

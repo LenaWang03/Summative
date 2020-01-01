@@ -10,6 +10,7 @@
 #include <stdlib.h>
 //int hitCounter = 100;
 // moves main character
+
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l) {
     calcBounds(player);
     if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -56,29 +57,30 @@ void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT
 }
 
 //moves the enemy randomly
-void moveEnemy(Object a[], LevelBG b, int &d, int m, ALLEGRO_EVENT &ev) {
+void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev) {
+    srand(time(0));
     storeCollision c;
     for (int i = 0; i < a[0].amount; i++) {
         // checks the collisions
         c = compareEnemyCollision(a[i], b.chairsF, b.desks);
         // changes direction if there is a collision
-        if ((d ==1 && c.r) || (d == 2 && c.l) || (d == 3 && c.u) || (d ==4 && c.d)) {
-            d = (rand()%4)+1;
+        if ((b.enemy[i].direction ==1 && c.r) || (b.enemy[i].direction == 2 && c.l) || (b.enemy[i].direction == 3 && c.u) || (b.enemy[i].direction ==4 && c.d)) {
+            b.enemy[i].direction = (rand()%4)+1;
         }
         // changes direction so it isn't always moving in one direction if it can
-        if (m == 0) {
-            m = rand() % 800+60;
-            d = (rand()%4)+1;
+        if (b.enemy[i].moveTime == 0) {
+            b.enemy[i].moveTime = rand() % 800+60;
+            b.enemy[i].direction = (rand()%4)+1;
         }
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             // applies movement to the enemy if there are no collision
-            if (d ==1 && !c.r) {
+            if (b.enemy[i].direction ==1 && !c.r) {
                 a[i].x += 1;
-            } else if (d == 2 && !c.l) {
+            } else if (b.enemy[i].direction == 2 && !c.l) {
                 a[i].x -= 1;
-            } else if (d == 3 && !c.u) {
+            } else if (b.enemy[i].direction == 3 && !c.u) {
                 a[i].y -= 1;
-            } else if (d ==4 && !c.d) {
+            } else if (b.enemy[i].direction ==4 && !c.d) {
                 a[i].y += 1;
             }
         }

@@ -60,7 +60,7 @@
 
 1575298275 source:c:\ics3u\summative\summative(github)\databasefunctions.cpp
 
-1577820933 source:c:\ics3u\summative\summative(github)\filefunctions.cpp
+1577854833 source:c:\ics3u\summative\summative(github)\filefunctions.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -72,9 +72,9 @@
 	<time.h>
 	<stdlib.h>
 
-1577828830 c:\ics3u\summative\summative(github)\headers.h
+1577852821 c:\ics3u\summative\summative(github)\headers.h
 
-1577827264 source:c:\ics3u\summative\summative(github)\summativeallegro.cpp
+1577854527 source:c:\ics3u\summative\summative(github)\summativeallegro.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -85,7 +85,7 @@
 	<allegro5/allegro_primitives.h>
 	<time.h>
 
-1577828909 source:c:\ics3u\summative\summative(github)\summativemain.cpp
+1577854240 source:c:\ics3u\summative\summative(github)\summativemain.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -107,7 +107,7 @@
 	<allegro5/allegro_primitives.h>
 	<time.h>
 
-1577822270 source:c:\ics3u\summative\summative(github)\setup.cpp
+1577854527 source:c:\ics3u\summative\summative(github)\setup.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -117,7 +117,7 @@
 	"headers.h"
 	<allegro5/allegro_primitives.h>
 
-1577828873 source:c:\ics3u\summative\summative(github)\buttons.cpp
+1577852402 source:c:\ics3u\summative\summative(github)\buttons.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>

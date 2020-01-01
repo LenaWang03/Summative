@@ -8,6 +8,7 @@
 #include "headers.h"
 #include <allegro5/allegro_primitives.h>
 
+int throwaway;
 void initializeAllegro() {
     // Initialize Allegro
     al_init();
@@ -18,12 +19,14 @@ void initializeAllegro() {
 }
 
 // initializes the sprite names and gets the starting positions from text files and prints it to the screen
-void setupLevel(LevelBG &a, Character &b, Object &c) {
+void setupLevel(LevelBG &a, Character &b, Object &c, int l) {
     // setting values to variables
     for (int i = 0; i < 10; i++){
         a.chairsF[i].filename = "chairF.png";
         a.desks[i].filename = "table.png";
         a.enemy[i].filename = "enemy.png";
+        a.enemy[i].direction = rand()% 4+1;
+        a.enemy[i].moveTime = rand() % 100+60;
     }
     a.door.filename = "door.png";
     b.filename = "player.png";
@@ -32,7 +35,7 @@ void setupLevel(LevelBG &a, Character &b, Object &c) {
     c.amount = 3;
     // prints everything to the screen
     getCharacter(b);
-    getObjects(a);
+    getObjects(a, l);
     loadObjectImage(c);
     loadObjectImage(a.background);
 }
@@ -70,10 +73,11 @@ void getCharacter(Character &a){
 }
 
 //gets starting positions and images from one text file for all objects
-void getObjects(LevelBG &a) {
+void getObjects(LevelBG &a, int l) {
     FILE *coordinates;
     coordinates = fopen ("setUp.txt", "r");
-    fscanf(coordinates, "%d", &a.chairsF[0].amount);
+    for (int x = 0; x < l+1; x++){
+        fscanf(coordinates, "%d", &a.chairsF[0].amount);
     for (int i = 0; i <a.chairsF[0].amount; i++) {
         loadObjectImage(a.chairsF[i]);
         fscanf(coordinates, "%d", &a.chairsF[i].x);
@@ -87,7 +91,6 @@ void getObjects(LevelBG &a) {
     }
     fscanf(coordinates, "%d", &a.enemy[0].amount);
     for (int i = 0; i <a.enemy[0].amount; i++) {
-        //loadObjectImage(a.enemy[i]);
         loadObjectImage(a.enemy[i]);
         fscanf(coordinates, "%d", &a.enemy[i].x);
         fscanf(coordinates, "%d", &a.enemy[i].y);
@@ -98,20 +101,24 @@ void getObjects(LevelBG &a) {
     loadObjectImage(a.door);
     fscanf(coordinates, "%d", &a.door.x);
     fscanf(coordinates, "%d", &a.door.y);
-    fclose(coordinates);
+    }
 }
 // draws in the hearts and updates them whenever the player loses a life
 void drawLives(Object a){
     for(int i = 0; i < a.amount; i++){
-        al_draw_scaled_bitmap(a.bitmap,0,0, 224,192,900+(i*80),900,74,64, 0);
+        al_draw_scaled_bitmap(a.bitmap,0,0, 224,192,450+(i*80),900,74,64, 0);
     }
 }
 
 // checks everything in allegro to make sure they opened properly
-int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue) {
+int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue) {
     // Check if your allegro routines worked successfully.
     if (!font) {
-        al_show_native_message_box(display, "Error", "Error", "Could not load comic.ttf",
+        al_show_native_message_box(display, "Error", "Error", "Could not load moonFlowerBold.ttf",
+                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
+        return -1;
+    }if (!fontPixel) {
+        al_show_native_message_box(display, "Error", "Error", "Could not load minecraft.ttf",
                                    nullptr, ALLEGRO_MESSAGEBOX_ERROR);
         return -1;
     }// Initialize display
@@ -145,7 +152,6 @@ int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_TIMER *time
     if (!event_queue) {
 		al_show_native_message_box(display, "Error", "Error", "Failed to create event_queue!",
                                  nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-		al_destroy_display(display);
       	return -1;
 	}
 
