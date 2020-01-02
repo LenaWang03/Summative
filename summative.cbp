@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Collisions.cpp" />
+		<Unit filename="buttons.cpp" />
 		<Unit filename="databaseFunctions.cpp" />
 		<Unit filename="fileFunctions.cpp" />
 		<Unit filename="headers.h" />

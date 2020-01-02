@@ -15,12 +15,11 @@ void calcBounds(Character &a) {
     a.right = a.left + al_get_bitmap_width(a.frame[0]) - 80;
     a.bottom = a.top + al_get_bitmap_height(a.frame[0]) -10;
 }
-
 // calculates bounds for objects, it is different from others because the images are scaled
 void calcObjectBounds(Object &a) {
-    a.left = a.x +5;
+    a.left = a.x;
     a.top  = a.y;
-    a.right = a.left + (al_get_bitmap_width(a.bitmap)-(al_get_bitmap_width(a.bitmap)*2/3))-10;
+    a.right = a.left + (al_get_bitmap_width(a.bitmap)-(al_get_bitmap_width(a.bitmap)*2/3));
     a.bottom = a.top + (al_get_bitmap_height(a.bitmap)-(al_get_bitmap_height(a.bitmap)*2/3));
 }
 // calculates background wall collisions
@@ -133,7 +132,7 @@ void stopCollision (Character &player, storeCollision c){
 // made for the enemy since the enemy is an object
 storeCollision isEnemyBackgroundCollision(Object &a){
     storeCollision answer;
-    if (a.bottom > 740) {
+    if (a.bottom > 855) {
         answer.d = true;
     } else {
         answer.d = false;
@@ -143,7 +142,7 @@ storeCollision isEnemyBackgroundCollision(Object &a){
     }else{
         answer.u = false;
     }
-    if (a.right > 1210) {
+    if (a.right > 1205) {
         answer.r = true;
     }else{
         answer.r = false;
@@ -192,14 +191,14 @@ storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]) {
     answer.d = false;
     answer.l = false;
     answer.r = false;
-    for (int i = 0; i <6; i++) {
+    for (int i = 0; i <b[0].amount; i++) {
         collisionType = isEnemyObjectCollision(a, b[i]);
         answer.u |= collisionType.u;
         answer.d |= collisionType.d;
         answer.r |= collisionType.r;
         answer.l |= collisionType.l;
     }
-    for (int i = 0; i <4; i++) {
+    for (int i = 0; i <c[0].amount; i++) {
         collisionType = isEnemyObjectCollision(a, c[i]);
         answer.u |= collisionType.u;
         answer.d |= collisionType.d;

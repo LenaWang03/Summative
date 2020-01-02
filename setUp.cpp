@@ -20,6 +20,7 @@ void initializeAllegro() {
 
 // initializes the sprite names and gets the starting positions from text files and prints it to the screen
 void setupLevel(LevelBG &a, Character &b, Object &c, int l) {
+    srand(time(0));
     // setting values to variables
     for (int i = 0; i < 10; i++){
         a.chairsF[i].filename = "chairF.png";
@@ -92,11 +93,10 @@ void getObjects(LevelBG &a, int l) {
     fscanf(coordinates, "%d", &a.enemy[0].amount);
     for (int i = 0; i <a.enemy[0].amount; i++) {
         loadObjectImage(a.enemy[i]);
+        a.enemy[i].frame[0] = al_load_bitmap("enemy.png");
+        a.enemy[i].frame[1] = al_load_bitmap("enemy2.png");
         fscanf(coordinates, "%d", &a.enemy[i].x);
         fscanf(coordinates, "%d", &a.enemy[i].y);
-        for (int x=0; x<2; x++) {
-        a.enemy[i].frame[x] = al_create_sub_bitmap(a.enemy[i].bitmap, x*302.5 , 0 , 302.5, 393);
-        }
     }
     loadObjectImage(a.door);
     fscanf(coordinates, "%d", &a.door.x);

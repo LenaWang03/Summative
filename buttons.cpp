@@ -42,8 +42,8 @@ void declareButtons (Button &start, Button &menu, Button &exitGame, Button &resu
     resume.click = false;
 
     nextLevel.bitmap = al_load_bitmap("buttonLong.png");
-    nextLevel.x = 500;
-    nextLevel.y = 500;
+    nextLevel.x = 450;
+    nextLevel.y = 600;
     nextLevel.text = "LEXT LEVEL";
     nextLevel.click = false;
 }

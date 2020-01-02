@@ -63,25 +63,39 @@ void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev) {
     for (int i = 0; i < a[0].amount; i++) {
         // checks the collisions
         c = compareEnemyCollision(a[i], b.chairsF, b.desks);
-        // changes direction if there is a collision
-        if ((b.enemy[i].direction ==1 && c.r) || (b.enemy[i].direction == 2 && c.l) || (b.enemy[i].direction == 3 && c.u) || (b.enemy[i].direction ==4 && c.d)) {
-            b.enemy[i].direction = (rand()%4)+1;
-        }
         // changes direction so it isn't always moving in one direction if it can
         if (b.enemy[i].moveTime == 0) {
             b.enemy[i].moveTime = rand() % 800+60;
             b.enemy[i].direction = (rand()%4)+1;
         }
+        // changes direction if there is a collision
+        if ((b.enemy[i].direction ==1 && c.u) || (b.enemy[i].direction == 3 && c.d) || (b.enemy[i].direction == 2 && c.r) || (b.enemy[i].direction == 4 && c.l)) {
+            b.enemy[i].direction = (rand()%4)+1;
+            b.enemy[i].moveTime = rand() % 800+60;
+        }
+        if (c.l){
+            printf("left\n");
+        }
+        if (c.u){
+            printf("up\n");
+        }
+        if (c.d){
+            printf("down\n");
+        }
+        if (c.r){
+            printf("right\n");
+        }
+        printf("%d",b.enemy[i].direction );
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             // applies movement to the enemy if there are no collision
-            if (b.enemy[i].direction ==1 && !c.r) {
-                a[i].x += 1;
-            } else if (b.enemy[i].direction == 2 && !c.l) {
-                a[i].x -= 1;
-            } else if (b.enemy[i].direction == 3 && !c.u) {
+            if (b.enemy[i].direction == 1 && !c.u) {
                 a[i].y -= 1;
-            } else if (b.enemy[i].direction ==4 && !c.d) {
+            } else if (b.enemy[i].direction == 2 && !c.r) {
+                a[i].x += 1;
+            } else if (b.enemy[i].direction == 3 && !c.d) {
                 a[i].y += 1;
+            } else if (b.enemy[i].direction == 4 && !c.l) {
+                a[i].x -= 1;
             }
         }
     }

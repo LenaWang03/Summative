@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     ALLEGRO_FONT *font = al_load_ttf_font("Moon Flower Bold.ttf", 100, 0);
     ALLEGRO_FONT *fontPixel = al_load_ttf_font("Minecraft.ttf", 40, 0);
     ALLEGRO_EVENT_QUEUE *event_queue = nullptr;
+    srand(time(0));
     // initializing
     event_queue = al_create_event_queue();
     timer = al_create_timer(1.0/FPS);
@@ -53,8 +54,12 @@ int main(int argc, char *argv[]) {
     Button exitGame;
     Button resume;
     Button nextLevel;
+    ALLEGRO_BITMAP *startCard;
     ALLEGRO_BITMAP *menuCard;
+    ALLEGRO_BITMAP *completeCard;
+    startCard = al_load_bitmap("startCard.png");
     menuCard = al_load_bitmap("menuCard.png");
+    completeCard = al_load_bitmap("completeCard.png");
     declareButtons(start, menu, exitGame, resume, nextLevel);
     // start of the game
     al_start_timer(timer);
@@ -73,8 +78,8 @@ int main(int argc, char *argv[]) {
         case 0:
             // draws text for opening screen
             al_clear_to_color(background);
-            al_draw_text(font, WHITE, 340, 400, 0, "THE PLANT KING!");
-            al_draw_text(font, WHITE, 300, 500, 0, "EXIT THE ROOM TO WIN");
+            al_draw_scaled_bitmap(startCard,0,0, 620,502,0,0,1240,1004, 0);
+            //al_draw_text(font, WHITE, 300, 500, 0, "EXIT THE ROOM TO WIN");
             if (makeButton(start, ev, fontPixel) == true) {
                 // creates and reads all the objects and characters from a text file
                 setupLevel(level[levelNum], player, lives, levelNum);
@@ -112,17 +117,13 @@ int main(int argc, char *argv[]) {
             break;
         case 3:
             // end screen
-            al_clear_to_color(background);
-            al_draw_text(font, WHITE, 300, 400, 0, "Finish");
+            al_draw_bitmap(completeCard,150,100,0);
             if(makeButton(nextLevel, ev, fontPixel) == true){
                 levelNum++;
                 setupLevel(level[levelNum], player, lives, levelNum);
                 phase = 1;
             }
             al_flip_display();
-            if (ev.keyboard.keycode == ALLEGRO_KEY_ENTER) {
-                playing = false;
-            }
             break;
         // when the player dies
         case 4:
@@ -136,6 +137,7 @@ int main(int argc, char *argv[]) {
             if(makeButton(exitGame, ev, fontPixel) == true){
                 phase = 0;
             }else if(makeButton(resume, ev, fontPixel) == true){
+                setupLevel(level[levelNum], player, lives, levelNum);
                 phase = 1;
             }
             al_flip_display();
