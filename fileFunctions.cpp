@@ -40,10 +40,6 @@ void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT
             player.mRight = 0;
         }
     } else if (ev.type == ALLEGRO_EVENT_TIMER) {
-        drawBG(b, l);
-        for (int i = 0; i < b.enemy[0].amount; i++) {
-            enemyAnimation(b.enemy[i]);
-        }
         // makes the amount the player moves 0 in the direction that the collision is
         stopCollision(player, c);
         // applies the movement to the player
@@ -52,7 +48,6 @@ void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT
         player.posy += player.mUp;
         player.posy += player.mDown;
         // animates and prints the player to the screen every tick
-        playerAnimation(player);
     }
 }
 
@@ -73,19 +68,6 @@ void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev) {
             b.enemy[i].direction = (rand()%4)+1;
             b.enemy[i].moveTime = rand() % 800+60;
         }
-        if (c.l){
-            printf("left\n");
-        }
-        if (c.u){
-            printf("up\n");
-        }
-        if (c.d){
-            printf("down\n");
-        }
-        if (c.r){
-            printf("right\n");
-        }
-        printf("%d",b.enemy[i].direction );
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             // applies movement to the enemy if there are no collision
             if (b.enemy[i].direction == 1 && !c.u) {
@@ -105,8 +87,18 @@ void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev) {
 bool endLevel(Character a, Object d) {
     calcBounds(a);
     calcObjectBounds(d);
-    if (a.bottom > d.top && (a.bottom < d.bottom +30) && a.left < d.right && a.right > d.left ) {
+    if (a.bottom > d.top && (a.bottom < d.bottom +20) && a.left < d.right -30 && a.right > d.left +30) {
         return true;
     }
     return false;
 }
+
+bool pickUpPetal (Character a, Object b, Item &c){
+    calcObjectBounds(b);
+    if ((a.bottom > b.top) && (a.bottom < b.bottom) && (a.right > b.left) && a.left < b.right) {
+        c.pickUp = true;
+        c.amount++;
+    }
+    return c.pickUp;
+}
+

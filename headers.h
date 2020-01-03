@@ -28,7 +28,6 @@ struct Object {
     ALLEGRO_BITMAP *frame[2];
     int direction;
     int moveTime;
-
 };
 struct LevelBG {;
     Object background;
@@ -36,6 +35,7 @@ struct LevelBG {;
     Object desks[10];
     Object enemy[10];
     Object door;
+    Object petal;
 };
 
 struct Button {
@@ -44,11 +44,14 @@ struct Button {
     const char *text;
     bool click;
 };
-
+struct Item {
+    bool pickUp;
+    int amount;
+};
 
 void initializeAllegro();
 int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue);
-void setupLevel(LevelBG &a, Character &b, Object &c, int l);
+void setupLevel(LevelBG &a, Character &b, Object &c, int l, Item &p);
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l);
 void calcBounds(Character &a);
 void calcObjectBounds(Object &a);
@@ -74,7 +77,7 @@ void isHit(Character &a, LevelBG b, int hitCounter, Object &l);
 void drawLives(Object a);
 bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel);
 void declareButtons(Button &start, Button &menu, Button &exitGame, Button &resume, Button &nextLevel);
-
+bool pickUpPetal (Character a, Object b, Item &c);
 
 
 

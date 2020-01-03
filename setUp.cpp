@@ -8,7 +8,6 @@
 #include "headers.h"
 #include <allegro5/allegro_primitives.h>
 
-int throwaway;
 void initializeAllegro() {
     // Initialize Allegro
     al_init();
@@ -19,7 +18,7 @@ void initializeAllegro() {
 }
 
 // initializes the sprite names and gets the starting positions from text files and prints it to the screen
-void setupLevel(LevelBG &a, Character &b, Object &c, int l) {
+void setupLevel(LevelBG &a, Character &b, Object &c, int l, Item &p) {
     srand(time(0));
     // setting values to variables
     for (int i = 0; i < 10; i++){
@@ -29,6 +28,8 @@ void setupLevel(LevelBG &a, Character &b, Object &c, int l) {
         a.enemy[i].direction = rand()% 4+1;
         a.enemy[i].moveTime = rand() % 100+60;
     }
+    p.pickUp = false;
+    a.petal.filename = "petal.png";
     a.door.filename = "door.png";
     b.filename = "player.png";
     a.background.filename = "background.png";
@@ -69,7 +70,7 @@ void getCharacter(Character &a){
     fscanf(coordinates, "%d", &a.posy);
     fclose(coordinates);
     for (int i=0; i<5; i++) {
-        a.frame[i] = al_create_sub_bitmap(a.bitmap, i*154 , 0 , 154, 195);
+        a.frame[i] = al_create_sub_bitmap(a.bitmap, i*145.8 , 0 , 145.8, 178);
 	}
 }
 
@@ -101,6 +102,13 @@ void getObjects(LevelBG &a, int l) {
     loadObjectImage(a.door);
     fscanf(coordinates, "%d", &a.door.x);
     fscanf(coordinates, "%d", &a.door.y);
+
+    fscanf(coordinates, "%d", &a.petal.amount);
+    for (int i = 0; i < a.petal.amount; i++) {
+        loadObjectImage(a.petal);
+        fscanf(coordinates, "%d", &a.petal.x);
+        fscanf(coordinates, "%d", &a.petal.y);
+    }
     }
 }
 // draws in the hearts and updates them whenever the player loses a life

@@ -25,7 +25,7 @@ void calcObjectBounds(Object &a) {
 // calculates background wall collisions
 storeCollision isBackgroundCollision(Character &a) {
     storeCollision answer;
-    if (a.bottom > 855) {
+    if (a.bottom > 845) {
         answer.d = true;
     } else {
         answer.d = false;
@@ -40,7 +40,7 @@ storeCollision isBackgroundCollision(Character &a) {
     }else{
         answer.r = false;
     }
-    if (a.left < 50) {
+    if (a.left < 60) {
         answer.l = true;
     }else{
         answer.l = false;
@@ -53,22 +53,22 @@ storeCollision isObjectCollision(Character &a, Object b) {
     // calculates the bounds by calling another function
     calcObjectBounds(b);
     storeCollision answer;
-    if (a.bottom > b.top && a.bottom < b.bottom  - 3 && a.left < b.right - 3 && a.right > b.left + 3) {
+    if (a.bottom > b.top -8 && a.bottom < b.bottom  - 6 && a.left < b.right - 6 && a.right > b.left + 6) {
         answer.d = true;
     } else {
         answer.d = false;
     }
-    if (a.bottom < b.bottom && a.bottom > b.top + 3 && a.left < b.right -3 && a.right > b.left + 3) {
+    if (a.bottom < b.bottom && a.bottom > b.top + 6 && a.left < b.right -6 && a.right > b.left + 6) {
         answer.u = true;
     } else {
         answer.u = false;
     }
-    if (a.left < b.right && a.right > b.right + 3 && a.bottom < b.bottom - 3 &&a.bottom > b.top + 3) {
+    if (a.left < b.right && a.right > b.right + 6 && a.bottom < b.bottom - 6 &&a.bottom > b.top + 6) {
         answer.l = true;
     } else {
         answer.l = false;
     }
-    if (a.right > b.left && a.left < b.left - 3&& a.bottom < b.bottom - 3&&a.bottom > b.top + 3) {
+    if (a.right > b.left && a.left < b.left - 6 && a.bottom < b.bottom - 6 &&a.bottom > b.top + 6) {
         answer.r = true;
     } else {
         answer.r = false;
