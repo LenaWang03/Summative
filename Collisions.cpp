@@ -206,6 +206,7 @@ storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]) {
         answer.l |= collisionType.l;
     }
     collisionType = isEnemyBackgroundCollision(a);
+    //printf("l:%d r:%d u:%d d:%d\n", collisionType.l, collisionType.r, collisionType.u, collisionType.d);
     answer.u |= collisionType.u;
     answer.d |= collisionType.d;
     answer.r |= collisionType.r;

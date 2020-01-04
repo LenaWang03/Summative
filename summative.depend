@@ -128,3 +128,73 @@
 	<allegro5/allegro_primitives.h>
 	<time.h>
 
+1578088449 source:c:\users\5353i\documents\coding\ics3u\lena_summative\summative\buttons.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+	<allegro5/allegro_primitives.h>
+	<time.h>
+
+1578098595 c:\users\5353i\documents\coding\ics3u\lena_summative\summative\headers.h
+
+1578098488 source:c:\users\5353i\documents\coding\ics3u\lena_summative\summative\collisions.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+	<allegro5/allegro_primitives.h>
+	<time.h>
+
+1578088449 source:c:\users\5353i\documents\coding\ics3u\lena_summative\summative\databasefunctions.cpp
+
+1578098520 source:c:\users\5353i\documents\coding\ics3u\lena_summative\summative\filefunctions.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+	<allegro5/allegro_primitives.h>
+	<time.h>
+	<stdlib.h>
+
+1578088449 source:c:\users\5353i\documents\coding\ics3u\lena_summative\summative\setup.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+	<allegro5/allegro_primitives.h>
+
+1578088449 source:c:\users\5353i\documents\coding\ics3u\lena_summative\summative\summativeallegro.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+	<allegro5/allegro_primitives.h>
+	<time.h>
+
+1578097741 source:c:\users\5353i\documents\coding\ics3u\lena_summative\summative\summativemain.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+	<allegro5/allegro_primitives.h>
+	<time.h>
+

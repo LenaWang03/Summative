@@ -24,6 +24,7 @@
 int main(int argc, char *argv[]) {
     // setting up allegro stuff
     initializeAllegro();
+    srand(time(0));
     // declaring
     ALLEGRO_DISPLAY *display = nullptr;
     ALLEGRO_TIMER *timer = nullptr;
@@ -107,6 +108,7 @@ int main(int argc, char *argv[]) {
             // calculates hitCounter, which determines how long the player remains frozen for
             if (compareCollision(player, level[levelNum]).enemy == true){
                 hitCounter = 0;
+                printf("hit\n");
             }
 
             hitCounter++;

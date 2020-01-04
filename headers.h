@@ -68,7 +68,7 @@ void stopCollision (Character &player, storeCollision);
 void drawBG(LevelBG a, Object &l);
 bool endLevel(Character a, Object d);
 int playerAnimation (Character a);
-void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev);
+void moveEnemy(Object a[], LevelBG &b, ALLEGRO_EVENT &ev);
 storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]);
 storeCollision isEnemyObjectCollision(Object &a, Object b);
 storeCollision isEnemyBackgroundCollision(Object &a);
@@ -78,6 +78,7 @@ void drawLives(Object a);
 bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel);
 void declareButtons(Button &start, Button &menu, Button &exitGame, Button &resume, Button &nextLevel);
 bool pickUpPetal (Character a, Object b, Item &c);
+int getNewDir(storeCollision c, int curr);
 
 
 
