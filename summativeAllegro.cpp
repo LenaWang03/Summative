@@ -68,10 +68,6 @@ int enemyAnimation (Object a) {
 void isHit(Character &a, LevelBG b, int hitCounter, Object &l) {
     if (hitCounter < 100) {
         i++;
-        a.mDown = 0;
-        a.mUp = 0;
-        a.mLeft = 0;
-        a.mRight = 0;
         if (i > 20 && i < 40) {
             drawBG(b, l);
             for (int x = 0; x < b.enemy[0].amount; x++) {
@@ -118,6 +114,48 @@ void isHit(Character &a, LevelBG b, int hitCounter, Object &l) {
         l.amount--;
         i = 0;
     }
+}
+
+void flipPages (int p, char l[][120], ALLEGRO_FONT *fp, ALLEGRO_FONT *f, Item le) {
+    char b[200] = "";
+    switch (p) {
+    case 0:
+        for (int i = 0; i <6; i++) {
+            sprintf(b, "%s", l[i]);
+            b[strlen(b)-1]='\0';
+            al_draw_text(fp, BLACK, 350, 370+(i*50), 0, b);
+        }
+
+        break;
+    case 1:
+        al_draw_bitmap(le.bitmap3, 220, 340, 0);
+        for (int i = 6; i <12; i++) {
+            sprintf(b, "%s", l[i]);
+            b[strlen(b)-1]='\0';
+            al_draw_text(fp, BLACK, 270, 260+((i-3)*50), 0, b);
+        }
+        break;
+    case 2:
+        al_draw_bitmap(le.bitmap3, 260, 270, 0);
+        for (int i = 12; i <18; i++) {
+            sprintf(b, "%s", l[i]);
+            b[strlen(b)-1]='\0';
+            al_draw_text(fp, BLACK, 310, 40+((i-6)*50), 0, b);
+        }
+    }
+    sprintf(b, "%d/3", p%3+1);
+    al_draw_text(f, BLACK, 590, 230, 0, b);
+}
+
+void loadBitmaps (ALLEGRO_BITMAP *looseBitmaps[]){
+    looseBitmaps[0] = al_load_bitmap("startCard.png");
+    looseBitmaps[1] = al_load_bitmap("menuCard.png");
+    looseBitmaps[2] = al_load_bitmap("completeCard.png");
+    looseBitmaps[3] = al_load_bitmap("reminderCard.png");
+    looseBitmaps[4] = al_load_bitmap("gameOverCard.png");
+    looseBitmaps[5] = al_load_bitmap("levelCard.png");
+    looseBitmaps[6] = al_load_bitmap("letter2.png");
+    looseBitmaps[7] = al_load_bitmap("white.png");
 }
 
 

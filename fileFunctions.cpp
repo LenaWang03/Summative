@@ -50,9 +50,16 @@ void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT
         // animates and prints the player to the screen every tick
     }
 }
-
+int getEnemyDirection(storeCollision c, int curr){
+    int ans = curr;
+    while(ans == 0 || (ans == 1 && c.u) || (ans == 2 && c.r) || (ans == 3 && c.d) || (ans == 4 && c.l))
+    {
+        ans = rand()%4+1;
+    }
+    return ans;
+}
 //moves the enemy randomly
-void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev) {
+void moveEnemy(Object a[], LevelBG &b, ALLEGRO_EVENT &ev) {
     srand(time(0));
     storeCollision c;
     for (int i = 0; i < a[0].amount; i++) {
@@ -60,14 +67,12 @@ void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev) {
         c = compareEnemyCollision(a[i], b.chairsF, b.desks);
         // changes direction so it isn't always moving in one direction if it can
         if (b.enemy[i].moveTime == 0) {
-            b.enemy[i].moveTime = rand() % 800+60;
-            b.enemy[i].direction = (rand()%4)+1;
+            b.enemy[i].moveTime = (rand() % 800)+60;
+            b.enemy[i].direction = getEnemyDirection(c, 0);
         }
         // changes direction if there is a collision
-        if ((b.enemy[i].direction ==1 && c.u) || (b.enemy[i].direction == 3 && c.d) || (b.enemy[i].direction == 2 && c.r) || (b.enemy[i].direction == 4 && c.l)) {
-            b.enemy[i].direction = (rand()%4)+1;
-            b.enemy[i].moveTime = rand() % 800+60;
-        }
+        b.enemy[i].direction = getEnemyDirection(c, b.enemy[i].direction);
+
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             // applies movement to the enemy if there are no collision
             if (b.enemy[i].direction == 1 && !c.u) {
@@ -93,12 +98,15 @@ bool endLevel(Character a, Object d) {
     return false;
 }
 
-bool pickUpPetal (Character a, Object b, Item &c){
-    calcObjectBounds(b);
+bool pickUpItem (Character a, Item &b){
+    b.left = b.x;
+    b.top  = b.y;
+    b.right = b.left + al_get_bitmap_width(b.bitmap);
+    b.bottom = b.top + al_get_bitmap_height(b.bitmap);
     if ((a.bottom > b.top) && (a.bottom < b.bottom) && (a.right > b.left) && a.left < b.right) {
-        c.pickUp = true;
-        c.amount++;
+        b.pickUp = true;
+        b.totalAmount++;
     }
-    return c.pickUp;
+    return b.pickUp;
 }
 

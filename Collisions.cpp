@@ -160,17 +160,17 @@ storeCollision isEnemyObjectCollision(Object &a, Object b){
     calcObjectBounds(a);
     calcObjectBounds(b);
     storeCollision answer;
-    if (a.bottom > b.top && a.bottom < b.bottom  - 1 && a.left < b.right - 1 && a.right > b.left + 1) {
+    if (a.bottom > b.top && a.bottom < b.bottom  - 3 && a.left < b.right - 3 && a.right > b.left + 3) {
         answer.d = true;
     } else {
         answer.d = false;
     }
-    if (a.bottom < b.bottom && a.bottom > b.top + 1 && a.left < b.right -1 && a.right > b.left + 1) {
+    if (a.bottom < b.bottom && a.bottom > b.top + 3 && a.left < b.right -3 && a.right > b.left + 3) {
         answer.u = true;
     } else {
         answer.u = false;
     }
-    if (a.left < b.right && a.right > b.right + 1 && a.bottom < b.bottom - 1 &&a.bottom > b.top + 1) {
+    if (a.left < b.right && a.right > b.right + 3 && a.bottom < b.bottom - 3 &&a.bottom > b.top + 3) {
         answer.l = true;
     } else {
         answer.l = false;

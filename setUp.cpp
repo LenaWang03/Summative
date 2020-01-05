@@ -15,31 +15,47 @@ void initializeAllegro() {
     al_init_ttf_addon();
     al_init_primitives_addon();
     al_install_mouse();
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 }
 
-// initializes the sprite names and gets the starting positions from text files and prints it to the screen
-void setupLevel(LevelBG &a, Character &b, Object &c, int l, Item &p) {
-    srand(time(0));
+// initializes the sprite names and variable values
+void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
     // setting values to variables
-    for (int i = 0; i < 10; i++){
-        a.chairsF[i].filename = "chairF.png";
-        a.desks[i].filename = "table.png";
-        a.enemy[i].filename = "enemy.png";
-        a.enemy[i].direction = rand()% 4+1;
-        a.enemy[i].moveTime = rand() % 100+60;
+    for (int x = 0; x < 9; x++){
+        for (int i = 0; i < 10; i++) {
+        a[x].chairsF[i].filename = "chairF.png";
+        a[x].desks[i].filename = "table.png";
+        a[x].enemy[i].filename = "enemy.png";
+        a[x].enemy[i].direction = rand()% 4+1;
+        a[x].enemy[i].moveTime = rand() % 100+60;
+        }
+        a[x].potion.filename = "potion.png";
+        a[x].door.filename = "door.png";
+        a[x].background.filename = "background.png";
+        a[x].potion.pickUp = false;
+        a[x].potion.totalAmount = 0;
     }
-    p.pickUp = false;
-    a.petal.filename = "petal.png";
-    a.door.filename = "door.png";
+    le.bitmap = al_load_bitmap("letter.png");
+    le.bitmap2 = al_load_bitmap("openLetter.png");
+    le.bitmap3 = al_load_bitmap("page.png");
+    le.pickUp = false;
+    le.x = 300;
+    le.y = 600;
+    le.amount = 1;
     b.filename = "player.png";
-    a.background.filename = "background.png";
+    loadCharacterImage(b);
+    for (int i=0; i<5; i++) {
+        b.frame[i] = al_create_sub_bitmap(b.bitmap, i*145.8, 0, 145.8, 178);
+    }
+    l = 0;
+    b.mUp = 0;
+    b.mDown = 0;
+    b.mLeft = 0;
+    b.mRight = 0;
     c.filename = "heart.png";
+    c.frame[0] = al_load_bitmap("blackHeart.png");
     c.amount = 3;
-    // prints everything to the screen
-    getCharacter(b);
-    getObjects(a, l);
     loadObjectImage(c);
-    loadObjectImage(a.background);
 }
 
 // loads character image
@@ -57,63 +73,68 @@ void loadObjectImage(Object &a) {
     }
 }
 
-// gets starting position and images for character
 void getCharacter(Character &a){
+    FILE *character;
+    character = fopen ("character.txt", "r");
+    fscanf(character, "%d", &a.posx);
+    fscanf(character, "%d", &a.posy);
     a.mUp = 0;
     a.mDown = 0;
     a.mLeft = 0;
     a.mRight = 0;
-    loadCharacterImage(a);
-    FILE *coordinates;
-    coordinates = fopen ("character.txt", "r");
-    fscanf(coordinates, "%d", &a.posx);
-    fscanf(coordinates, "%d", &a.posy);
-    fclose(coordinates);
-    for (int i=0; i<5; i++) {
-        a.frame[i] = al_create_sub_bitmap(a.bitmap, i*145.8 , 0 , 145.8, 178);
-	}
 }
-
-//gets starting positions and images from one text file for all objects
-void getObjects(LevelBG &a, int l) {
+//gets starting positions and images from one text file for all objects and characters and loads them
+void getSetUp(LevelBG a[], char b[][120]) {
     FILE *coordinates;
     coordinates = fopen ("setUp.txt", "r");
-    for (int x = 0; x < l+1; x++){
-        fscanf(coordinates, "%d", &a.chairsF[0].amount);
-    for (int i = 0; i <a.chairsF[0].amount; i++) {
-        loadObjectImage(a.chairsF[i]);
-        fscanf(coordinates, "%d", &a.chairsF[i].x);
-        fscanf(coordinates, "%d", &a.chairsF[i].y);
+    for (int i = 0; i <18; i++){
+        fgets( b[i], 120, coordinates);
     }
-    fscanf(coordinates, "%d", &a.desks[0].amount);
-    for (int i = 0; i <a.desks[0].amount; i++) {
-        loadObjectImage(a.desks[i]);
-        fscanf(coordinates, "%d", &a.desks[i].x);
-        fscanf(coordinates, "%d", &a.desks[i].y);
+    for (int x = 0; x < 9; x++) {
+        // chairs
+        fscanf(coordinates, "%d", &a[x].chairsF[0].amount);
+        for (int i = 0; i <a[x].chairsF[0].amount; i++) {
+            loadObjectImage(a[x].chairsF[i]);
+            fscanf(coordinates, "%d", &a[x].chairsF[i].x);
+            fscanf(coordinates, "%d", &a[x].chairsF[i].y);
+        }
+        //desks
+        fscanf(coordinates, "%d", &a[x].desks[0].amount);
+        for (int i = 0; i <a[x].desks[0].amount; i++) {
+            loadObjectImage(a[x].desks[i]);
+            fscanf(coordinates, "%d", &a[x].desks[i].x);
+            fscanf(coordinates, "%d", &a[x].desks[i].y);
+        }
+        //enemy
+        fscanf(coordinates, "%d", &a[x].enemy[0].amount);
+        for (int i = 0; i <a[x].enemy[0].amount; i++) {
+            loadObjectImage(a[x].enemy[i]);
+            a[x].enemy[i].frame[0] = al_load_bitmap("enemy.png");
+            a[x].enemy[i].frame[1] = al_load_bitmap("enemy2.png");
+            fscanf(coordinates, "%d", &a[x].enemy[i].x);
+            fscanf(coordinates, "%d", &a[x].enemy[i].y);
+        }
+        // door
+        loadObjectImage(a[x].door);
+        fscanf(coordinates, "%d", &a[x].door.x);
+        fscanf(coordinates, "%d", &a[x].door.y);
+        // potion
+        fscanf(coordinates, "%d", &a[x].potion.amount);
+        for (int i = 0; i < a[x].potion.amount; i++) {
+            a[x].potion.bitmap = al_load_bitmap(a[x].potion.filename);
+            fscanf(coordinates, "%d", &a[x].potion.x);
+            fscanf(coordinates, "%d", &a[x].potion.y);
+        }
+        loadObjectImage(a[x].background);
     }
-    fscanf(coordinates, "%d", &a.enemy[0].amount);
-    for (int i = 0; i <a.enemy[0].amount; i++) {
-        loadObjectImage(a.enemy[i]);
-        a.enemy[i].frame[0] = al_load_bitmap("enemy.png");
-        a.enemy[i].frame[1] = al_load_bitmap("enemy2.png");
-        fscanf(coordinates, "%d", &a.enemy[i].x);
-        fscanf(coordinates, "%d", &a.enemy[i].y);
-    }
-    loadObjectImage(a.door);
-    fscanf(coordinates, "%d", &a.door.x);
-    fscanf(coordinates, "%d", &a.door.y);
-
-    fscanf(coordinates, "%d", &a.petal.amount);
-    for (int i = 0; i < a.petal.amount; i++) {
-        loadObjectImage(a.petal);
-        fscanf(coordinates, "%d", &a.petal.x);
-        fscanf(coordinates, "%d", &a.petal.y);
-    }
-    }
+    fclose(coordinates);
 }
 // draws in the hearts and updates them whenever the player loses a life
-void drawLives(Object a){
-    for(int i = 0; i < a.amount; i++){
+void drawLives(Object a) {
+    for(int i = 0; i < 3; i++) {
+        al_draw_scaled_bitmap(a.frame[0],0,0, 224,192,450+(i*80),900,74,64, 0);
+    }
+    for(int i = 0; i < a.amount; i++) {
         al_draw_scaled_bitmap(a.bitmap,0,0, 224,192,450+(i*80),900,74,64, 0);
     }
 }
@@ -125,43 +146,43 @@ int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontP
         al_show_native_message_box(display, "Error", "Error", "Could not load moonFlowerBold.ttf",
                                    nullptr, ALLEGRO_MESSAGEBOX_ERROR);
         return -1;
-    }if (!fontPixel) {
+    }
+    if (!fontPixel) {
         al_show_native_message_box(display, "Error", "Error", "Could not load minecraft.ttf",
                                    nullptr, ALLEGRO_MESSAGEBOX_ERROR);
         return -1;
     }// Initialize display
-	display = al_create_display(SCREEN_W, SCREEN_H);
+    display = al_create_display(SCREEN_W, SCREEN_H);
     al_set_window_title(display, "Summative");
 
-	if (!display) {
-    	al_show_native_message_box(display, "Error", "Error", "Failed to initialize display!",
-                                 nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-       	return -1;
-	}
-
-  	// Initialize keyboard routines
-	if (!al_install_keyboard()) {
-	    al_show_native_message_box(display, "Error", "Error", "failed to initialize the keyboard!",
-                                 nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-      	return -1;
-   	}
-
-	// need to add image processor
- 	if (!al_init_image_addon()) {
-    	al_show_native_message_box(display, "Error", "Error", "Failed to initialize image addon!",
-                                 nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-    	return -1;
-	}
-	if (!timer) {
-   		al_show_native_message_box(display, "Error", "Error", "Failed to create timer!",
-                                 nullptr, ALLEGRO_MESSAGEBOX_ERROR);
+    if (!display) {
+        al_show_native_message_box(display, "Error", "Error", "Failed to initialize display!",
+                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
         return -1;
-	}
+    }
+    // Initialize keyboard routines
+    if (!al_install_keyboard()) {
+        al_show_native_message_box(display, "Error", "Error", "failed to initialize the keyboard!",
+                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
+        return -1;
+    }
+
+    // need to add image processor
+    if (!al_init_image_addon()) {
+        al_show_native_message_box(display, "Error", "Error", "Failed to initialize image addon!",
+                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
+        return -1;
+    }
+    if (!timer) {
+        al_show_native_message_box(display, "Error", "Error", "Failed to create timer!",
+                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
+        return -1;
+    }
     if (!event_queue) {
-		al_show_native_message_box(display, "Error", "Error", "Failed to create event_queue!",
-                                 nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-      	return -1;
-	}
+        al_show_native_message_box(display, "Error", "Error", "Failed to create event_queue!",
+                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
+        return -1;
+    }
 
     return 0;
 }

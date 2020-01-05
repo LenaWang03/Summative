@@ -1,8 +1,27 @@
-2 200 300 400 300 
-2 150 400 350 400 
-1 800 500 
-470 15
+After years and years of searching 
+you have finally found the answer 
+to all your questions. All of your 
+research pointed you to this abandoned 
+highschool, which was known as 
+Lisgar Collegiate Institute before 
+the pathogens from the mysterious 
+flowers spread. Because of your immunity 
+to the pathogen, it became your life's 
+charge to find a cure to give humanity a 
+second chance, in other words, find the 
+elixir to life. Here lies the elements 
+you need to create the elixir, except 
+they are heavily guarded by the plant 
+mutations brought along with the mysterious 
+flowers. Good luck on your journey, the 
+fate of humanity is in your hands.
+Welcome to the rooms of Khloris
+
 0
+0
+0
+30 15
+1 100 300
 
 6 200 300 400 300 600 700 400 600 200 600 700 300 
 4 150 400 350 400 50 700 350 700
@@ -10,9 +29,15 @@
 270 15
 1 100 800
 
+2 200 300 400 300 
+2 150 400 350 400 
+1 800 500 
+470 15
+0
+
 4 700 400 700 600 900 500 100 100
 3 250 800 350 100 300 100
-2 100 100 800 800
+4 100 100 800 800 500 50 500 100
 970 15
 1 800 300
 
@@ -21,3 +46,29 @@
 0
 30 15
 1 100 300
+
+0
+0
+0
+30 15
+1 100 300
+
+0
+0
+0
+30 15
+1 100 300
+
+0
+0
+0
+30 15
+1 100 300
+
+0
+0
+0
+30 15
+1 100 300
+
+

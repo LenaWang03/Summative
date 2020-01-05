@@ -2,6 +2,7 @@ const int SCREEN_W = 1240;
 const int SCREEN_H = 1004;
 const float FPS = 80;
 #define WHITE        al_map_rgb(255, 255, 255)
+#define BLACK        al_map_rgb(0, 0, 0)
 
 struct Character {
     ALLEGRO_BITMAP *bitmap;               // picture
@@ -29,13 +30,25 @@ struct Object {
     int direction;
     int moveTime;
 };
+struct Item {
+    const char *filename;
+    bool pickUp;
+    int amount;
+    ALLEGRO_BITMAP *bitmap;
+    ALLEGRO_BITMAP *bitmap2;
+    ALLEGRO_BITMAP *bitmap3;
+    int right, left, top, bottom;
+    int x,y;
+    int totalAmount;
+
+};
 struct LevelBG {;
     Object background;
     Object chairsF[10];
     Object desks[10];
     Object enemy[10];
     Object door;
-    Object petal;
+    Item potion;
 };
 
 struct Button {
@@ -44,13 +57,10 @@ struct Button {
     const char *text;
     bool click;
 };
-struct Item {
-    bool pickUp;
-    int amount;
-};
 
 void initializeAllegro();
 int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue);
+void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le);
 void setupLevel(LevelBG &a, Character &b, Object &c, int l, Item &p);
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l);
 void calcBounds(Character &a);
@@ -61,14 +71,14 @@ storeCollision isBackgroundCollision(Character &a);
 storeCollision isObjectCollision(Character &a, Object b);
 storeCollision compareCollision(Character a, LevelBG b);
 void getCharacter(Character &a);
-void getObjects(LevelBG &a, int l);
+void getSetUp(LevelBG a[], char b[][120]);
 void drawObjects(Object a[]);
 void drawObject(Object a);
 void stopCollision (Character &player, storeCollision);
 void drawBG(LevelBG a, Object &l);
 bool endLevel(Character a, Object d);
 int playerAnimation (Character a);
-void moveEnemy(Object a[], LevelBG b, ALLEGRO_EVENT &ev);
+void moveEnemy(Object a[], LevelBG &b, ALLEGRO_EVENT &ev);
 storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]);
 storeCollision isEnemyObjectCollision(Object &a, Object b);
 storeCollision isEnemyBackgroundCollision(Object &a);
@@ -76,9 +86,9 @@ int enemyAnimation (Object a);
 void isHit(Character &a, LevelBG b, int hitCounter, Object &l);
 void drawLives(Object a);
 bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel);
-void declareButtons(Button &start, Button &menu, Button &exitGame, Button &resume, Button &nextLevel);
-bool pickUpPetal (Character a, Object b, Item &c);
-
-
-
+void declareButtons(Button &start, Button &menu, Button &exitGame, Button &resume, Button &nextLevel, Button &levelSelect, Button levels[], Button &next, Button &last, Button &goBack, Button &letter, Button &finish);
+bool pickUpItem(Character a, Item &b);
+int getEnemyDirection(storeCollision c, int curr);
+void flipPages (int p, char l[][120], ALLEGRO_FONT *fp, ALLEGRO_FONT *f, Item le);
+void loadBitmaps (ALLEGRO_BITMAP *looseBitmaps[]);
 
