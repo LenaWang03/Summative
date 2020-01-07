@@ -4,32 +4,12 @@
 	<ActiveTarget name="Debug" />
 	<File name="headers.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2967" topLine="77" />
-		</Cursor>
-	</File>
-	<File name="setUp.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="605" topLine="172" />
-		</Cursor>
-	</File>
-	<File name="summativeAllegro.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4227" topLine="26" />
+			<Cursor1 position="1282" topLine="49" />
 		</Cursor>
 	</File>
 	<File name="summativemain.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="8317" topLine="177" />
-		</Cursor>
-	</File>
-	<File name="buttons.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="18" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Collisions.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="783" topLine="6" />
+			<Cursor1 position="3774" topLine="84" />
 		</Cursor>
 	</File>
 	<File name="databaseFunctions.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -39,7 +19,27 @@
 	</File>
 	<File name="fileFunctions.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1976" topLine="49" />
+			<Cursor1 position="2231" topLine="48" />
+		</Cursor>
+	</File>
+	<File name="buttons.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="633" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="Collisions.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6817" topLine="181" />
+		</Cursor>
+	</File>
+	<File name="setUp.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2947" topLine="86" />
+		</Cursor>
+	</File>
+	<File name="summativeAllegro.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5027" topLine="116" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

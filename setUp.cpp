@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
@@ -48,14 +47,22 @@ void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
         b.frame[i] = al_create_sub_bitmap(b.bitmap, i*145.8, 0, 145.8, 178);
     }
     l = 0;
-    b.mUp = 0;
-    b.mDown = 0;
-    b.mLeft = 0;
-    b.mRight = 0;
     c.filename = "heart.png";
     c.frame[0] = al_load_bitmap("blackHeart.png");
     c.amount = 3;
     loadObjectImage(c);
+    if (!c.frame[0]){
+        printf ("Black hearts bitmap couldn't load");
+    }
+    if (!le.bitmap){
+        printf ("Letter bitmap couldn't load");
+    }
+    if (!le.bitmap2){
+        printf("Open letter bitmap couldn't load");
+    }
+    if (!le.bitmap3){
+        printf("Letter page bitmap couldn't load");
+    }
 }
 
 // loads character image
@@ -75,6 +82,9 @@ void loadObjectImage(Object &a) {
 
 void getCharacter(Character &a){
     FILE *character;
+    if (!character){
+        printf("Character file couldn't load");
+    }
     character = fopen ("character.txt", "r");
     fscanf(character, "%d", &a.posx);
     fscanf(character, "%d", &a.posy);
@@ -86,6 +96,9 @@ void getCharacter(Character &a){
 //gets starting positions and images from one text file for all objects and characters and loads them
 void getSetUp(LevelBG a[], char b[][120]) {
     FILE *coordinates;
+    if (!coordinates){
+        printf("Character file couldn't load");
+    }
     coordinates = fopen ("setUp.txt", "r");
     for (int i = 0; i <18; i++){
         fgets( b[i], 120, coordinates);
@@ -127,6 +140,15 @@ void getSetUp(LevelBG a[], char b[][120]) {
         }
         loadObjectImage(a[x].background);
     }
+    if (!a[0].potion.bitmap){
+        printf("Potion bitmap couldn't load");
+    }
+    if (!a[1].enemy[0].frame[1]){
+        printf("Enemy2 bitmap couldn't load");
+    }
+    if (!a[1].enemy[0].frame[0]){
+        printf("Enemy bitmap couldn't load");
+    }
     fclose(coordinates);
 }
 // draws in the hearts and updates them whenever the player loses a life
@@ -140,51 +162,31 @@ void drawLives(Object a) {
 }
 
 // checks everything in allegro to make sure they opened properly
-int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue) {
+void checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue) {
     // Check if your allegro routines worked successfully.
     if (!font) {
-        al_show_native_message_box(display, "Error", "Error", "Could not load moonFlowerBold.ttf",
-                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-        return -1;
+        printf("Moon flower font couldn't load");
     }
     if (!fontPixel) {
-        al_show_native_message_box(display, "Error", "Error", "Could not load minecraft.ttf",
-                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-        return -1;
+        printf("Pixel font couldn't load");
     }// Initialize display
-    display = al_create_display(SCREEN_W, SCREEN_H);
-    al_set_window_title(display, "Summative");
-
     if (!display) {
-        al_show_native_message_box(display, "Error", "Error", "Failed to initialize display!",
-                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-        return -1;
+        printf("Display couldn't load");
     }
     // Initialize keyboard routines
     if (!al_install_keyboard()) {
-        al_show_native_message_box(display, "Error", "Error", "failed to initialize the keyboard!",
-                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-        return -1;
+        printf("Keyboard couldn't load");
     }
-
     // need to add image processor
     if (!al_init_image_addon()) {
-        al_show_native_message_box(display, "Error", "Error", "Failed to initialize image addon!",
-                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-        return -1;
+        printf("Image add on couldn't load");
     }
     if (!timer) {
-        al_show_native_message_box(display, "Error", "Error", "Failed to create timer!",
-                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-        return -1;
+        printf("Timer couldn't load");
     }
     if (!event_queue) {
-        al_show_native_message_box(display, "Error", "Error", "Failed to create event_queue!",
-                                   nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-        return -1;
+        printf("Event queue couldn't load");
     }
-
-    return 0;
 }
 
 

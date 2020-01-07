@@ -60,7 +60,7 @@
 
 1575298275 source:c:\ics3u\summative\summative(github)\databasefunctions.cpp
 
-1578253404 source:c:\ics3u\summative\summative(github)\filefunctions.cpp
+1578369528 source:c:\ics3u\summative\summative(github)\filefunctions.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -72,9 +72,9 @@
 	<time.h>
 	<stdlib.h>
 
-1578259664 c:\ics3u\summative\summative(github)\headers.h
+1578370362 c:\ics3u\summative\summative(github)\headers.h
 
-1578257568 source:c:\ics3u\summative\summative(github)\summativeallegro.cpp
+1578370864 source:c:\ics3u\summative\summative(github)\summativeallegro.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -85,7 +85,7 @@
 	<allegro5/allegro_primitives.h>
 	<time.h>
 
-1578260840 source:c:\ics3u\summative\summative(github)\summativemain.cpp
+1578371576 source:c:\ics3u\summative\summative(github)\summativemain.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -96,7 +96,7 @@
 	<allegro5/allegro_primitives.h>
 	<time.h>
 
-1578096615 source:c:\ics3u\summative\summative(github)\collisions.cpp
+1578322400 source:c:\ics3u\summative\summative(github)\collisions.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -107,7 +107,7 @@
 	<allegro5/allegro_primitives.h>
 	<time.h>
 
-1578259908 source:c:\ics3u\summative\summative(github)\setup.cpp
+1578367368 source:c:\ics3u\summative\summative(github)\setup.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -117,7 +117,7 @@
 	"headers.h"
 	<allegro5/allegro_primitives.h>
 
-1578259688 source:c:\ics3u\summative\summative(github)\buttons.cpp
+1578368471 source:c:\ics3u\summative\summative(github)\buttons.cpp
 	<stdio.h>
 	<allegro5/allegro.h>
 	<allegro5/allegro_font.h>
@@ -127,4 +127,16 @@
 	"headers.h"
 	<allegro5/allegro_primitives.h>
 	<time.h>
+
+1578370864 source:c:\ics3u\summative\summative(github)\printfunctions.cpp
+	<stdio.h>
+	<allegro5/allegro.h>
+	<allegro5/allegro_font.h>
+	<allegro5/allegro_ttf.h>
+	<allegro5/allegro_native_dialog.h>
+	"allegro5/allegro_image.h"
+	"headers.h"
+	<allegro5/allegro_primitives.h>
+	<time.h>
+	<stdlib.h>
 

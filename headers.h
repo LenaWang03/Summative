@@ -3,6 +3,8 @@ const int SCREEN_H = 1004;
 const float FPS = 80;
 #define WHITE        al_map_rgb(255, 255, 255)
 #define BLACK        al_map_rgb(0, 0, 0)
+#define BROWN        al_map_rgb(104,76,60)
+
 
 struct Character {
     ALLEGRO_BITMAP *bitmap;               // picture
@@ -59,7 +61,7 @@ struct Button {
 };
 
 void initializeAllegro();
-int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue);
+void checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue);
 void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le);
 void setupLevel(LevelBG &a, Character &b, Object &c, int l, Item &p);
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l);
@@ -75,7 +77,7 @@ void getSetUp(LevelBG a[], char b[][120]);
 void drawObjects(Object a[]);
 void drawObject(Object a);
 void stopCollision (Character &player, storeCollision);
-void drawBG(LevelBG a, Object &l);
+void drawBG(LevelBG a, Object &l, Item le, ALLEGRO_FONT *f, int level);
 bool endLevel(Character a, Object d);
 int playerAnimation (Character a);
 void moveEnemy(Object a[], LevelBG &b, ALLEGRO_EVENT &ev);
@@ -83,7 +85,7 @@ storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]);
 storeCollision isEnemyObjectCollision(Object &a, Object b);
 storeCollision isEnemyBackgroundCollision(Object &a);
 int enemyAnimation (Object a);
-void isHit(Character &a, LevelBG b, int hitCounter, Object &l);
+void isHit(Character &a, LevelBG b, int hitCounter, Object &l, Item le, ALLEGRO_FONT *f, int level);
 void drawLives(Object a);
 bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel);
 void declareButtons(Button &start, Button &menu, Button &exitGame, Button &resume, Button &nextLevel, Button &levelSelect, Button levels[], Button &next, Button &last, Button &goBack, Button &letter, Button &finish);
@@ -91,4 +93,5 @@ bool pickUpItem(Character a, Item &b);
 int getEnemyDirection(storeCollision c, int curr);
 void flipPages (int p, char l[][120], ALLEGRO_FONT *fp, ALLEGRO_FONT *f, Item le);
 void loadBitmaps (ALLEGRO_BITMAP *looseBitmaps[]);
-
+void drawCard (int cardNum, ALLEGRO_BITMAP *card[]);
+void printCard (ALLEGRO_FONT *fp, int phase, int po);

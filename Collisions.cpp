@@ -47,7 +47,6 @@ storeCollision isBackgroundCollision(Character &a) {
     }
     return answer;
 }
-
 // calculates the collisions based on the object bounds
 storeCollision isObjectCollision(Character &a, Object b) {
     // calculates the bounds by calling another function
@@ -75,7 +74,6 @@ storeCollision isObjectCollision(Character &a, Object b) {
     }
     return answer;
 }
-
 // looks at all the collisions and processes them
 storeCollision compareCollision(Character a, LevelBG b) {
     storeCollision collisionType;
@@ -112,7 +110,6 @@ storeCollision compareCollision(Character a, LevelBG b) {
     }
     return answer;
 }
-
 // stops player from moving in a certain direction if there is a collision detected
 void stopCollision (Character &player, storeCollision c){
     if (c.u == true){
@@ -129,7 +126,6 @@ void stopCollision (Character &player, storeCollision c){
     }
 }
 //***************SAME THING BUT INSTEAD OF CHARACTER W/ OBJECT COLLISIONS IT IS OBJECT W/ OBJECT COLLISIONS*****
-// made for the enemy since the enemy is an object
 storeCollision isEnemyBackgroundCollision(Object &a){
     storeCollision answer;
     if (a.bottom > 855) {
@@ -182,7 +178,6 @@ storeCollision isEnemyObjectCollision(Object &a, Object b){
     }
     return answer;
 }
-
 // looks at all the collisions and processes them
 storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]) {
     storeCollision collisionType;

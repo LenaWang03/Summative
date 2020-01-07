@@ -10,9 +10,12 @@
 
 bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel){
     al_draw_scaled_bitmap(a.bitmap,0,0, al_get_bitmap_width(a.bitmap),al_get_bitmap_height(a.bitmap),a.x,a.y,al_get_bitmap_width(a.bitmap)/2,al_get_bitmap_height(a.bitmap)/2, 0);
-    al_draw_text(fontPixel, WHITE, a.x + 25, a.y+18, 0, a.text);
+    al_draw_text(fontPixel, WHITE, a.x + 25, a.y-10, 0, a.text);
     if(ev.mouse.x >= a.x && ev.mouse.y >= a.y && ev.mouse.x <= a.x + al_get_bitmap_width(a.bitmap)/2 && ev.mouse.y <= a.y +147 && ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP){
         a.click = true;
+    }
+    if (!a.bitmap){
+        printf("Error: %s button couldn't load", a.text);
     }
     return a.click;
 }
@@ -44,7 +47,7 @@ void declareButtons (Button &start, Button &menu, Button &exitGame, Button &resu
     nextLevel.bitmap = al_load_bitmap("buttonLong.png");
     nextLevel.x = 450;
     nextLevel.y = 600;
-    nextLevel.text = "LEXT LEVEL";
+    nextLevel.text = "NEXT LEVEL";
     nextLevel.click = false;
 
     levelSelect.bitmap = al_load_bitmap("buttonLong.png");
@@ -52,6 +55,7 @@ void declareButtons (Button &start, Button &menu, Button &exitGame, Button &resu
     levelSelect.y = 700;
     levelSelect.text = "QUICK PLAY";
     levelSelect.click = false;
+
     levels[0].x = 370;
     levels[0].y = 370;
     levels[0].text = ("1");

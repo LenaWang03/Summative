@@ -8,7 +8,6 @@
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
 #include <stdlib.h>
-//int hitCounter = 100;
 // moves main character
 
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l) {
@@ -60,7 +59,6 @@ int getEnemyDirection(storeCollision c, int curr){
 }
 //moves the enemy randomly
 void moveEnemy(Object a[], LevelBG &b, ALLEGRO_EVENT &ev) {
-    srand(time(0));
     storeCollision c;
     for (int i = 0; i < a[0].amount; i++) {
         // checks the collisions
