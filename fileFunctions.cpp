@@ -13,29 +13,29 @@
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l) {
     calcBounds(player);
     if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-        if (ev.keyboard.keycode == ALLEGRO_KEY_UP) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_UP || ev.keyboard.keycode == ALLEGRO_KEY_W) {
             player.mUp = -2;
         }
-        if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN || ev.keyboard.keycode == ALLEGRO_KEY_S) {
             player.mDown = 2;
         }
-        if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT || ev.keyboard.keycode == ALLEGRO_KEY_A) {
             player.mLeft = -2;
         }
-        if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT || ev.keyboard.keycode == ALLEGRO_KEY_D) {
             player.mRight = 2;
         }
     } else if (ev.type == ALLEGRO_EVENT_KEY_UP) {
-        if (ev.keyboard.keycode == ALLEGRO_KEY_UP) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_UP || ev.keyboard.keycode == ALLEGRO_KEY_W) {
             player.mUp = 0;
         }
-        if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN || ev.keyboard.keycode == ALLEGRO_KEY_S) {
             player.mDown = 0;
         }
-        if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT || ev.keyboard.keycode == ALLEGRO_KEY_A) {
             player.mLeft = 0;
         }
-        if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+        if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT || ev.keyboard.keycode == ALLEGRO_KEY_D) {
             player.mRight = 0;
         }
     } else if (ev.type == ALLEGRO_EVENT_TIMER) {

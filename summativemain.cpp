@@ -17,10 +17,10 @@ int main(int argc, char *argv[]) {
     initializeAllegro();
     // declaring/ initializing
     ALLEGRO_DISPLAY *display = al_create_display(SCREEN_W, SCREEN_H);
-    ALLEGRO_TIMER *timer = al_create_timer(1.0/FPS);;
+    ALLEGRO_TIMER *timer = al_create_timer(1.0/FPS);
     ALLEGRO_FONT *font = al_load_ttf_font("Moon Flower Bold.ttf", 50, 0);
     ALLEGRO_FONT *fontPixel = al_load_ttf_font("Pixeled.ttf", 30, 0);
-    ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();;
+    ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();
     srand(time(0));
     al_set_window_title(display, "ROOMS OF KHLORIS");
     bool playing = true;
@@ -228,6 +228,7 @@ int main(int argc, char *argv[]) {
                 if(makeButton(levels[i], ev, fontPixel) == true) {
                     levelNum = i;
                     phase = 1;
+                    letter.pickUp = true;
                 }
             }
             if(makeButton(goBack, ev, fontPixel) == true) {
