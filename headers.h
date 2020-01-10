@@ -55,6 +55,7 @@ struct LevelBG {;
     Object enemy[30];
     Object door;
     Item potion;
+    Item heal;
 };
 
 struct Button {

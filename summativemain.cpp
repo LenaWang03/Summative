@@ -102,6 +102,10 @@ int main(int argc, char *argv[]) {
             moveCharacter(player, level[levelNum], compareCollision(player, level[levelNum]), ev, lives);
             // draws background and objects
             drawBG(level[levelNum], lives, letter, fontPixel, levelNum);
+            /*if (level[levelNum].heal.pickUp = false && level[levelNum].heal.amount == 1){
+                al_draw_bitmap(heal.bitmap, heal.x, heal.y,0);
+                pickUpItem(player, letter);
+            }*/
             if (levelNum == 0) {
                 if (letter.pickUp == false) {
                     al_draw_bitmap(letter.bitmap, letter.x, letter.y,0);
@@ -150,6 +154,8 @@ int main(int argc, char *argv[]) {
                 }
                 if (levelNum == 8 && level[levelNum].potion.totalAmount < 9) {
                     phase = 7;
+                    getCharacter(player);
+                    al_play_sample(winSound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 } else if (level[levelNum].potion.totalAmount == 9) {
                     phase = 2;
                     al_play_sample(winSound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
