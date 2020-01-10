@@ -1,3 +1,5 @@
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 const int SCREEN_W = 1240;
 const int SCREEN_H = 1004;
 const float FPS = 80;
@@ -13,6 +15,7 @@ struct Character {
     int posx, posy;             // position on screen
     const char *filename;
     ALLEGRO_BITMAP *frame[5];
+    ALLEGRO_SAMPLE *sound;
 };
 struct storeCollision
 {
@@ -31,6 +34,7 @@ struct Object {
     ALLEGRO_BITMAP *frame[2];
     int direction;
     int moveTime;
+    ALLEGRO_SAMPLE *sound;
 };
 struct Item {
     const char *filename;
@@ -38,17 +42,17 @@ struct Item {
     int amount;
     ALLEGRO_BITMAP *bitmap;
     ALLEGRO_BITMAP *bitmap2;
-    ALLEGRO_BITMAP *bitmap3;
     int right, left, top, bottom;
     int x,y;
     int totalAmount;
+    ALLEGRO_SAMPLE *sound;
 
 };
 struct LevelBG {;
     Object background;
-    Object chairsF[10];
-    Object desks[10];
-    Object enemy[10];
+    Object chairsF[30];
+    Object desks[30];
+    Object enemy[30];
     Object door;
     Item potion;
 };
@@ -58,6 +62,7 @@ struct Button {
     int x,y;
     const char *text;
     bool click;
+    ALLEGRO_SAMPLE *sound;
 };
 
 void initializeAllegro();
@@ -79,13 +84,13 @@ void drawObject(Object a);
 void stopCollision (Character &player, storeCollision);
 void drawBG(LevelBG a, Object &l, Item le, ALLEGRO_FONT *f, int level);
 bool endLevel(Character a, Object d);
-int playerAnimation (Character a);
+int playerAnimation (Character a, int counter);
 void moveEnemy(Object a[], LevelBG &b, ALLEGRO_EVENT &ev);
 storeCollision compareEnemyCollision(Object &a, Object b[], Object c[]);
 storeCollision isEnemyObjectCollision(Object &a, Object b);
 storeCollision isEnemyBackgroundCollision(Object &a);
-int enemyAnimation (Object a);
-void isHit(Character &a, LevelBG b, int hitCounter, Object &l, Item le, ALLEGRO_FONT *f, int level);
+int enemyAnimation (Object a, int counter);
+void isHit(Character &a, LevelBG b, int hitCounter, Object &l, Item le, ALLEGRO_FONT *f, int level, int counter);
 void drawLives(Object a);
 bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel);
 void declareButtons(Button &start, Button &menu, Button &exitGame, Button &resume, Button &nextLevel, Button &levelSelect, Button levels[], Button &next, Button &last, Button &goBack, Button &letter, Button &finish);
@@ -95,3 +100,5 @@ void flipPages (int p, char l[][120], ALLEGRO_FONT *fp, ALLEGRO_FONT *f, Item le
 void loadBitmaps (ALLEGRO_BITMAP *looseBitmaps[]);
 void drawCard (int cardNum, ALLEGRO_BITMAP *card[]);
 void printCard (ALLEGRO_FONT *fp, int phase, int po);
+void setButtons (Button b[], Button levels[]);
+void switchPhase(Button b, int &p, ALLEGRO_EVENT ev, ALLEGRO_FONT *fp, int change);

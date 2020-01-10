@@ -8,6 +8,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
 #include <stdlib.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 void printCard (ALLEGRO_FONT *fp, int p, int po) {
     char buffer[2] = "";
@@ -35,22 +37,23 @@ void printCard (ALLEGRO_FONT *fp, int p, int po) {
         al_draw_text(fp, BROWN, 490, 350, 0, "GAME PAUSED");
         break;
     case 6:
-        al_draw_text(fp, WHITE, 300, 400, 0, "REMEMBER TO GET ALL ITEMS");
+        al_draw_text(fp, WHITE, 285, 400, 0, "REMEMBER TO GET ALL ITEMS");
         al_draw_text(fp, WHITE, 320, 450, 0, "TO COMPLETE YOUR QUEST");
         al_draw_text(fp, WHITE, 320, 500, 0, "FOR THE ELIXIR OF LIFE");
         break;
     case 8:
-        al_draw_text(fp, WHITE, 170, 200, 0, "THIS WILL APPEAR IN YOUR INVENTORY");
-        al_draw_text(fp, WHITE, 140, 250, 0, "CLICK ON IT IF YOU WANT TO READ IT AGAIN");
+        al_draw_text(fp, WHITE, 100, 150, 0, "CLICK ON THIS MAIL ICON IN YOUR TOOLBAR TO");
+        al_draw_text(fp, WHITE, 50, 200, 0, "READ THE LETTER AGAIN THROUGHOUT THE GAME");
+        al_draw_text(fp, WHITE, 480, 700, 0, "CLICK TO OPEN");
         break;
     }
 }
 
 void flipPages (int p, char l[][120], ALLEGRO_FONT *f, ALLEGRO_FONT *fp, Item le) {
     char b[200] = "";
-            al_draw_bitmap(le.bitmap3, 220, 340, 0);
-            al_draw_bitmap(le.bitmap3, 260, 270, 0);
-            al_draw_bitmap(le.bitmap3, 300, 300, 0);
+            al_draw_bitmap(le.bitmap2, 220, 340, 0);
+            al_draw_bitmap(le.bitmap2, 260, 270, 0);
+            al_draw_bitmap(le.bitmap2, 300, 300, 0);
     switch (p) {
     case 0:
         for (int i = 0; i <6; i++) {
@@ -60,7 +63,7 @@ void flipPages (int p, char l[][120], ALLEGRO_FONT *f, ALLEGRO_FONT *fp, Item le
         }
         break;
     case 1:
-        al_draw_bitmap(le.bitmap3, 220, 340, 0);
+        al_draw_bitmap(le.bitmap2, 220, 340, 0);
         for (int i = 6; i <12; i++) {
             sprintf(b, "%s", l[i]);
             b[strlen(b)-1]='\0';
@@ -68,7 +71,7 @@ void flipPages (int p, char l[][120], ALLEGRO_FONT *f, ALLEGRO_FONT *fp, Item le
         }
         break;
     case 2:
-        al_draw_bitmap(le.bitmap3, 260, 270, 0);
+        al_draw_bitmap(le.bitmap2, 260, 270, 0);
         for (int i = 12; i <18; i++) {
             sprintf(b, "%s", l[i]);
             b[strlen(b)-1]='\0';
@@ -76,5 +79,5 @@ void flipPages (int p, char l[][120], ALLEGRO_FONT *f, ALLEGRO_FONT *fp, Item le
         }
     }
     sprintf(b, "%d/3", p%3+1);
-    al_draw_text(fp, BLACK, 590, 230, 0, b);
+    al_draw_text(fp, BLACK, 590, 200, 0, b);
 }

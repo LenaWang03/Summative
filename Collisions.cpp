@@ -7,6 +7,8 @@
 #include "headers.h"
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 // calculates bounds for character - accounts for the hair
 void calcBounds(Character &a) {
@@ -127,6 +129,7 @@ void stopCollision (Character &player, storeCollision c){
 }
 //***************SAME THING BUT INSTEAD OF CHARACTER W/ OBJECT COLLISIONS IT IS OBJECT W/ OBJECT COLLISIONS*****
 storeCollision isEnemyBackgroundCollision(Object &a){
+    calcObjectBounds(a);
     storeCollision answer;
     if (a.bottom > 855) {
         answer.d = true;

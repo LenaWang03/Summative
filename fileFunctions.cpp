@@ -8,8 +8,10 @@
 #include <allegro5/allegro_primitives.h>
 #include <time.h>
 #include <stdlib.h>
-// moves main character
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
+// moves main character
 void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT &ev, Object l) {
     calcBounds(player);
     if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -104,6 +106,7 @@ bool pickUpItem (Character a, Item &b){
     if ((a.bottom > b.top) && (a.bottom < b.bottom) && (a.right > b.left) && a.left < b.right) {
         b.pickUp = true;
         b.totalAmount++;
+        al_play_sample(b.sound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
     }
     return b.pickUp;
 }

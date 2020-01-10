@@ -6,6 +6,8 @@
 #include "allegro5/allegro_image.h"
 #include "headers.h"
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 void initializeAllegro() {
     // Initialize Allegro
@@ -15,33 +17,38 @@ void initializeAllegro() {
     al_init_primitives_addon();
     al_install_mouse();
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
+    al_init_acodec_addon();
+    al_install_audio();
 }
 
 // initializes the sprite names and variable values
 void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
     // setting values to variables
     for (int x = 0; x < 9; x++){
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
         a[x].chairsF[i].filename = "chairF.png";
         a[x].desks[i].filename = "table.png";
         a[x].enemy[i].filename = "enemy.png";
         a[x].enemy[i].direction = rand()% 4+1;
         a[x].enemy[i].moveTime = rand() % 100+60;
+        a[x].enemy[i].sound = al_load_sample("die.wav");
         }
         a[x].potion.filename = "potion.png";
         a[x].door.filename = "door.png";
         a[x].background.filename = "background.png";
         a[x].potion.pickUp = false;
         a[x].potion.totalAmount = 0;
+        a[x].potion.sound = al_load_sample("pickUp.ogg");
     }
     le.bitmap = al_load_bitmap("letter.png");
-    le.bitmap2 = al_load_bitmap("openLetter.png");
-    le.bitmap3 = al_load_bitmap("page.png");
+    le.bitmap2 = al_load_bitmap("page.png");
     le.pickUp = false;
+    le.sound = al_load_sample("pickUp.ogg");
     le.x = 300;
     le.y = 600;
     le.amount = 1;
     b.filename = "player.png";
+    b.sound = al_load_sample("step.wav");
     loadCharacterImage(b);
     for (int i=0; i<5; i++) {
         b.frame[i] = al_create_sub_bitmap(b.bitmap, i*145.8, 0, 145.8, 178);
@@ -51,6 +58,9 @@ void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
     c.frame[0] = al_load_bitmap("blackHeart.png");
     c.amount = 3;
     loadObjectImage(c);
+    if (!le.sound){
+        printf ("Letter audio couldn't load");
+    }
     if (!c.frame[0]){
         printf ("Black hearts bitmap couldn't load");
     }
@@ -59,9 +69,6 @@ void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
     }
     if (!le.bitmap2){
         printf("Open letter bitmap couldn't load");
-    }
-    if (!le.bitmap3){
-        printf("Letter page bitmap couldn't load");
     }
 }
 
@@ -81,17 +88,12 @@ void loadObjectImage(Object &a) {
 }
 
 void getCharacter(Character &a){
-    FILE *character;
-    if (!character){
-        printf("Character file couldn't load");
-    }
-    character = fopen ("character.txt", "r");
-    fscanf(character, "%d", &a.posx);
-    fscanf(character, "%d", &a.posy);
     a.mUp = 0;
     a.mDown = 0;
     a.mLeft = 0;
     a.mRight = 0;
+    a.posx = 1070;
+    a.posy = 680;
 }
 //gets starting positions and images from one text file for all objects and characters and loads them
 void getSetUp(LevelBG a[], char b[][120]) {
@@ -143,12 +145,15 @@ void getSetUp(LevelBG a[], char b[][120]) {
     if (!a[0].potion.bitmap){
         printf("Potion bitmap couldn't load");
     }
-    if (!a[1].enemy[0].frame[1]){
-        printf("Enemy2 bitmap couldn't load");
+    if (a[1].enemy[0].amount >0){
+        if (!a[1].enemy[0].frame[1]){
+            printf("Enemy2 bitmap couldn't load");
+        }
+        if (!a[1].enemy[0].frame[0]){
+            printf("Enemy bitmap couldn't load");
+        }
     }
-    if (!a[1].enemy[0].frame[0]){
-        printf("Enemy bitmap couldn't load");
-    }
+
     fclose(coordinates);
 }
 // draws in the hearts and updates them whenever the player loses a life
