@@ -30,9 +30,8 @@ int main(int argc, char *argv[]) {
     ALLEGRO_SAMPLE *levelWinSound = al_load_sample("levelWin.wav");
 
     srand(time(0));
-    if (!al_reserve_samples(4)){
-        printf("failed to reserve samples!\n");
-        return -1;
+    if (!al_reserve_samples(4)) {
+        printf("Didn't reserve samples!\n");
     }
     al_set_window_title(display, "ROOMS OF KHLORIS");
     bool playing = true;
@@ -40,6 +39,7 @@ int main(int argc, char *argv[]) {
     Character player;
     Object lives;
     Item letter;
+    Item speed;
     int levelNum = 0;
     int phase = 0;
     int page = 0;
@@ -64,7 +64,8 @@ int main(int argc, char *argv[]) {
     setUp(level, player, lives, levelNum, letter);
     getSetUp(level, letterInfo);
     al_play_sample(musicSound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
-
+    speed.filename = "blue.png";
+    loadItem(speed, 330, 530);
     // start of the game
     al_start_timer(timer);
 
@@ -94,85 +95,26 @@ int main(int argc, char *argv[]) {
                 playing = false;
             }
             levelNum = 0;
-            hitCounter = 110;
+            hitCounter = 210;
             al_flip_display();
             break;
         case 1:
-            // moves character and enemy
-            moveCharacter(player, level[levelNum], compareCollision(player, level[levelNum]), ev, lives);
             // draws background and objects
             drawBG(level[levelNum], lives, letter, fontPixel, levelNum);
-            /*if (level[levelNum].heal.pickUp = false && level[levelNum].heal.amount == 1){
-                al_draw_bitmap(heal.bitmap, heal.x, heal.y,0);
-                pickUpItem(player, letter);
-            }*/
-            if (levelNum == 0) {
-                if (letter.pickUp == false) {
-                    al_draw_bitmap(letter.bitmap, letter.x, letter.y,0);
-                    pickUpItem(player, letter);
-                } else if (letter.pickUp == true && letter.amount == 1) {
-                    phase = 8;
-                    player.mDown = 0;
-                    player.mUp = 0;
-                    player.mLeft = 0;
-                    player.mRight = 0;
-                }
-            }
-            // puts letter in tool bar section so the user can reread it
-            if (letter.pickUp == true) {
-                switchPhase(buttons[9], phase, ev, fontPixel, 8);
-            }
-            if (level[levelNum].potion.amount == 1) {
-                if (level[levelNum].potion.pickUp == false) {
-                    al_draw_bitmap(level[levelNum].potion.bitmap, level[levelNum].potion.x,level[levelNum].potion.y,0);
-                    pickUpItem(player, level[levelNum].potion);
-                }
-            }
-            animationCounter++;
-            for (int i = 0; i < level[levelNum].enemy[0].amount; i++) {
-                enemyAnimation(level[levelNum].enemy[i], animationCounter);
-            }
-            playerAnimation(player, animationCounter);
-            // calculates hitCounter, which determines how long the player remains frozen for
-            if (compareCollision(player, level[levelNum]).enemy == true) {
-                hitCounter = 0;
-            }
-            hitCounter++;
-            isHit(player, level[levelNum], hitCounter, lives, letter, fontPixel, levelNum, animationCounter);
-            // determines how long the enemy moves for
-            for (int i = 0; i <10; i++) {
-                level[levelNum].enemy[i].moveTime --;
-            }
-            moveEnemy(level[levelNum].enemy, level[levelNum], ev);
-            drawLives(lives);
+            // tells the user that they have to use arrow keys to move until the user moves
+            printCard(fontPixel, phase, level[levelNum].potion.totalAmount, player);
+            // deals with anything that has to do with picking up items
+            setItems(letter, speed, level[levelNum], levelNum, player, lives, ev, phase, fontPixel, buttons);
+            // moves and animates the character and enemy
+            movingParts(player, level[levelNum], animationCounter, hitCounter, lives, fontPixel, levelNum, letter, ev);
+            // if the user clicks the menu button it brings them to the menu phase
             switchPhase(buttons[1], phase, ev, fontPixel, 5);
+            ending(player, level[levelNum], letter, phase, levelWinSound, winSound, overSound, levelNum, lives);
             al_flip_display();
-            // if the user is in front of the door the game will end
-            if (endLevel(player, level[levelNum].door)) {
-                if ((letter.pickUp == false) ||(level[levelNum].potion.amount == 1 && level[levelNum].potion.pickUp == false) ) {
-                    phase = 6;
-                }
-                if (levelNum == 8 && level[levelNum].potion.totalAmount < 9) {
-                    phase = 7;
-                    getCharacter(player);
-                    al_play_sample(winSound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
-                } else if (level[levelNum].potion.totalAmount == 9) {
-                    phase = 2;
-                    al_play_sample(winSound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
-                } else if ((level[levelNum].potion.amount == 0)||(level[levelNum].potion.amount == 1 && level[levelNum].potion.pickUp == true&&letter.pickUp == true)) {
-                    al_play_sample(levelWinSound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
-                    phase = 3;
-                }
-            }
-            // if the user loses all three lives the game ends
-            if (lives.amount == 0) {
-                phase = 4;
-                al_play_sample(overSound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
-            }
             break;
         case 2:
             drawCard(2, looseBitmaps);
-            printCard(fontPixel, phase, level[levelNum].potion.totalAmount);
+            printCard(fontPixel, phase, level[levelNum].potion.totalAmount, player);
             buttons[10].y = 600;
             if (makeButton(buttons[10], ev, fontPixel) == true) {
                 setUp(level, player, lives, levelNum, letter);
@@ -184,7 +126,7 @@ int main(int argc, char *argv[]) {
         case 3:
             // next level screen
             drawCard(2, looseBitmaps);
-            printCard(fontPixel, phase, level[levelNum].potion.totalAmount);
+            printCard(fontPixel, phase, level[levelNum].potion.totalAmount, player);
             if(makeButton(buttons[4], ev, fontPixel) == true) {
                 levelNum++;
                 getCharacter(player);
@@ -199,7 +141,7 @@ int main(int argc, char *argv[]) {
         // when the player dies
         case 4:
             drawCard(4, looseBitmaps);
-            printCard(fontPixel, phase, level[levelNum].potion.totalAmount);
+            printCard(fontPixel, phase, level[levelNum].potion.totalAmount, player);
             buttons[2].y = 600;
             if(makeButton(buttons[2], ev, fontPixel) == true) {
                 phase = 0;
@@ -213,7 +155,7 @@ int main(int argc, char *argv[]) {
         case 5:
             // menu
             drawCard(1, looseBitmaps);
-            printCard(fontPixel, phase, level[levelNum].potion.totalAmount);
+            printCard(fontPixel, phase, level[levelNum].potion.totalAmount, player);
             buttons[2].y = 500;
             switchPhase(buttons[2], phase, ev, fontPixel, 0);
             buttons[3].y = 600;
@@ -223,14 +165,21 @@ int main(int argc, char *argv[]) {
         case 6:
             // reminder to let the user know to get the potion
             drawCard(3, looseBitmaps);
-            printCard(fontPixel, phase, level[levelNum].potion.totalAmount);
+            printCard(fontPixel, phase, level[levelNum].potion.totalAmount, player);
+            if (levelNum == 0 && level[levelNum].potion.totalAmount == 1){
+                al_draw_bitmap(level[0].potion.bitmap, 350, 350, 0);
+                al_draw_bitmap(level[2].heal.bitmap, 350, 410, 0);
+                al_draw_bitmap(speed.bitmap, 350, 470, 0);
+            }
             buttons[3].y = 600;
             if(makeButton(buttons[3], ev, fontPixel) == true) {
                 player.posy += 30;
                 player.mUp = 0;
                 player.mLeft = 0;
                 player.mRight = 0;
+                player.mDown = 0;
                 phase = 1;
+                level[levelNum].potion.amount = 0;
             }
             al_flip_display();
             break;
@@ -253,7 +202,7 @@ int main(int argc, char *argv[]) {
             break;
         case 8:
             // premise of the game
-            printCard(fontPixel, phase, level[levelNum].potion.totalAmount);
+            printCard(fontPixel, phase, level[levelNum].potion.totalAmount, player);
             switchPhase(buttons[11], phase, ev, fontPixel, 9);
             al_flip_display();
             break;

@@ -49,12 +49,12 @@ int playerAnimation (Character a, int counter) {
     if (counter % 20 == 19) {
         curr ++;
     }
-    if (a.mRight == 2) {
+    if (a.mRight >0) {
         frame = curr % 2 +1;
-    } else if (a.mLeft == -2) {
+    } else if (a.mLeft < 0) {
         frame = curr % 2 +1;
         flags = ALLEGRO_FLIP_HORIZONTAL;
-    } else if (a.mDown == 2 || a.mUp == -2) {
+    } else if (a.mDown >0 || a.mUp < 0) {
         frame = (curr % 2)+3;
     }
     al_draw_bitmap(a.frame[frame], a.posx, a.posy, flags);
@@ -78,7 +78,7 @@ void isHit(Character &a, LevelBG b, int hitCounter, Object &l, Item le, ALLEGRO_
         l.amount--;
         i = 0;
     }
-    if (hitCounter < 100) {
+    if (hitCounter < 200) {
         i++;
         for (int j = 0; j <20; j++) {
             if (i > (j*40)+20 && i < (j*40)+40) {
@@ -138,5 +138,6 @@ void drawCard (int cardNum, ALLEGRO_BITMAP *card[]) {
         al_draw_bitmap(card[cardNum], 150, 100, 0);
     }
 }
+
 
 

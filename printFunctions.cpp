@@ -11,9 +11,14 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 
-void printCard (ALLEGRO_FONT *fp, int p, int po) {
+void printCard (ALLEGRO_FONT *fp, int p, int po, Character pl) {
     char buffer[2] = "";
     switch (p) {
+    case 1:
+        if (pl.posx ==1070 && pl.posy == 680 && po == 0){
+            al_draw_text(fp, WHITE, 50, 200, 0, "USE ARROW KEYS OR WASD KEYS TO MOVE AROUND");
+        }
+        break;
     case 2:
         al_draw_text(fp, WHITE, 350, 350, 0, "YOUR LIFE'S WORK IS ");
         al_draw_text(fp, WHITE, 350, 400, 0, "COMPLETE.  ALL ELEMENTS");
@@ -37,9 +42,16 @@ void printCard (ALLEGRO_FONT *fp, int p, int po) {
         al_draw_text(fp, BROWN, 490, 350, 0, "GAME PAUSED");
         break;
     case 6:
-        al_draw_text(fp, WHITE, 285, 400, 0, "REMEMBER TO GET ALL ITEMS");
-        al_draw_text(fp, WHITE, 320, 450, 0, "TO COMPLETE YOUR QUEST");
-        al_draw_text(fp, WHITE, 320, 500, 0, "FOR THE ELIXIR OF LIFE");
+        if (po == 1 && pl.posy > 40){
+            al_draw_text(fp, WHITE, 400, 350, 0, "= POTIONS FOR ELIXIR");
+            al_draw_text(fp, WHITE, 400, 400, 0, "= HEAL POTION (+1 LIFE)");
+            al_draw_text(fp, WHITE, 400, 450, 0, "= SPEED POTION (PRESS");
+            al_draw_text(fp, WHITE, 400, 500, 0, "   SPACE BAR TO RUN)");
+        }else{
+            al_draw_text(fp, WHITE, 285, 400, 0, "REMEMBER TO GET ALL ITEMS");
+            al_draw_text(fp, WHITE, 320, 450, 0, "TO COMPLETE YOUR QUEST");
+            al_draw_text(fp, WHITE, 320, 500, 0, "FOR THE ELIXIR OF LIFE");
+        }
         break;
     case 8:
         al_draw_text(fp, WHITE, 100, 150, 0, "CLICK ON THIS MAIL ICON IN YOUR TOOLBAR TO");
@@ -49,35 +61,4 @@ void printCard (ALLEGRO_FONT *fp, int p, int po) {
     }
 }
 
-void flipPages (int p, char l[][120], ALLEGRO_FONT *f, ALLEGRO_FONT *fp, Item le) {
-    char b[200] = "";
-            al_draw_bitmap(le.bitmap2, 220, 340, 0);
-            al_draw_bitmap(le.bitmap2, 260, 270, 0);
-            al_draw_bitmap(le.bitmap2, 300, 300, 0);
-    switch (p) {
-    case 0:
-        for (int i = 0; i <6; i++) {
-            sprintf(b, "%s", l[i]);
-            b[strlen(b)-1]='\0';
-            al_draw_text(f, BLACK, 380, 370+(i*50), 0, b);
-        }
-        break;
-    case 1:
-        al_draw_bitmap(le.bitmap2, 220, 340, 0);
-        for (int i = 6; i <12; i++) {
-            sprintf(b, "%s", l[i]);
-            b[strlen(b)-1]='\0';
-            al_draw_text(f, BLACK, 280, 260+((i-3)*50), 0, b);
-        }
-        break;
-    case 2:
-        al_draw_bitmap(le.bitmap2, 260, 270, 0);
-        for (int i = 12; i <18; i++) {
-            sprintf(b, "%s", l[i]);
-            b[strlen(b)-1]='\0';
-            al_draw_text(f, BLACK, 300, 40+((i-6)*50), 0, b);
-        }
-    }
-    sprintf(b, "%d/3", p%3+1);
-    al_draw_text(fp, BLACK, 590, 200, 0, b);
-}
+

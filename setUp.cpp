@@ -38,15 +38,17 @@ void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
         a[x].background.filename = "background.png";
         a[x].potion.pickUp = false;
         a[x].potion.totalAmount = 0;
+        a[x].potion.amount = 1;
         a[x].potion.sound = al_load_sample("pickUp.ogg");
+        a[x].heal.filename = "heal.png";
+        a[x].heal.pickUp = false;
+        a[x].heal.identifier = 3;
+        a[x].heal.sound = al_load_sample("pickUp.ogg");
     }
-    le.bitmap = al_load_bitmap("letter.png");
+    le.filename = ("letter.png");
     le.bitmap2 = al_load_bitmap("page.png");
-    le.pickUp = false;
-    le.sound = al_load_sample("pickUp.ogg");
-    le.x = 300;
-    le.y = 600;
     le.amount = 1;
+    loadItem(le, 300, 600);
     b.filename = "player.png";
     b.sound = al_load_sample("step.wav");
     loadCharacterImage(b);
@@ -63,9 +65,6 @@ void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
     }
     if (!c.frame[0]){
         printf ("Black hearts bitmap couldn't load");
-    }
-    if (!le.bitmap){
-        printf ("Letter bitmap couldn't load");
     }
     if (!le.bitmap2){
         printf("Open letter bitmap couldn't load");
@@ -87,6 +86,17 @@ void loadObjectImage(Object &a) {
     }
 }
 
+void loadItem(Item &a, int x, int y){
+    a.bitmap = al_load_bitmap(a.filename);
+    if (a.bitmap == nullptr) {
+        printf("Image %s couldn't load", a.filename);
+    }
+    a.x = x;
+    a.y = y;
+    a.pickUp = false;
+    a.sound = al_load_sample("pickUp.ogg");
+}
+
 void getCharacter(Character &a){
     a.mUp = 0;
     a.mDown = 0;
@@ -99,7 +109,7 @@ void getCharacter(Character &a){
 void getSetUp(LevelBG a[], char b[][120]) {
     FILE *coordinates;
     if (!coordinates){
-        printf("Character file couldn't load");
+        printf("Coordinates file couldn't load");
     }
     coordinates = fopen ("setUp.txt", "r");
     for (int i = 0; i <18; i++){
@@ -107,6 +117,7 @@ void getSetUp(LevelBG a[], char b[][120]) {
     }
     for (int x = 0; x < 9; x++) {
         // chairs
+
         fscanf(coordinates, "%d", &a[x].chairsF[0].amount);
         for (int i = 0; i <a[x].chairsF[0].amount; i++) {
             loadObjectImage(a[x].chairsF[i]);
@@ -136,14 +147,17 @@ void getSetUp(LevelBG a[], char b[][120]) {
         // potion
         fscanf(coordinates, "%d", &a[x].potion.amount);
         for (int i = 0; i < a[x].potion.amount; i++) {
-            a[x].potion.bitmap = al_load_bitmap(a[x].potion.filename);
+            loadItem(a[x].potion, 0, 0);
             fscanf(coordinates, "%d", &a[x].potion.x);
             fscanf(coordinates, "%d", &a[x].potion.y);
         }
         loadObjectImage(a[x].background);
-    }
-    if (!a[0].potion.bitmap){
-        printf("Potion bitmap couldn't load");
+        fscanf(coordinates, "%d", &a[x].heal.amount);
+        for (int i = 0; i < a[x].heal.amount; i++) {
+            loadItem(a[x].heal, 0, 0);
+            fscanf(coordinates, "%d", &a[x].heal.x);
+            fscanf(coordinates, "%d", &a[x].heal.y);
+        }
     }
     if (a[1].enemy[0].amount >0){
         if (!a[1].enemy[0].frame[1]){

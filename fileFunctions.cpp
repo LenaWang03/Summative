@@ -51,10 +51,9 @@ void moveCharacter(Character &player, LevelBG b, storeCollision c, ALLEGRO_EVENT
         // animates and prints the player to the screen every tick
     }
 }
-int getEnemyDirection(storeCollision c, int curr){
+int getEnemyDirection(storeCollision c, int curr) {
     int ans = curr;
-    while(ans == 0 || (ans == 1 && c.u) || (ans == 2 && c.r) || (ans == 3 && c.d) || (ans == 4 && c.l))
-    {
+    while(ans == 0 || (ans == 1 && c.u) || (ans == 2 && c.r) || (ans == 3 && c.d) || (ans == 4 && c.l)) {
         ans = rand()%4+1;
     }
     return ans;
@@ -98,7 +97,7 @@ bool endLevel(Character a, Object d) {
     return false;
 }
 
-bool pickUpItem (Character a, Item &b){
+bool pickUpItem (Character a, Item &b, Object &l) {
     b.left = b.x;
     b.top  = b.y;
     b.right = b.left + al_get_bitmap_width(b.bitmap);
@@ -106,8 +105,12 @@ bool pickUpItem (Character a, Item &b){
     if ((a.bottom > b.top) && (a.bottom < b.bottom) && (a.right > b.left) && a.left < b.right) {
         b.pickUp = true;
         b.totalAmount++;
+        if (l.amount < 3 && b.identifier == 3) {
+            l.amount ++;
+        }
         al_play_sample(b.sound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
     }
     return b.pickUp;
 }
+
 

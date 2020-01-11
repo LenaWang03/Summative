@@ -13,11 +13,8 @@
 bool makeButton (Button a, ALLEGRO_EVENT ev, ALLEGRO_FONT *fontPixel){
     al_draw_scaled_bitmap(a.bitmap,0,0, al_get_bitmap_width(a.bitmap),al_get_bitmap_height(a.bitmap),a.x,a.y,al_get_bitmap_width(a.bitmap)/2,al_get_bitmap_height(a.bitmap)/2, 0);
     al_draw_text(fontPixel, WHITE, a.x + 25, a.y-10, 0, a.text);
-    if(ev.mouse.x >= a.x && ev.mouse.y >= a.y && ev.mouse.x <= a.x + al_get_bitmap_width(a.bitmap)/2 && ev.mouse.y <= a.y +147 && ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP){
+    if(ev.mouse.x >= a.x && ev.mouse.y >= a.y && ev.mouse.x <= a.x + al_get_bitmap_width(a.bitmap)/2 && ev.mouse.y <= a.y +al_get_bitmap_height(a.bitmap)/2 && ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP){
         a.click = true;
-    }
-    if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP){
-        printf("%d %d\n", ev.mouse.x, ev.mouse.y);
     }
     if (a.click == true){
         al_play_sample(a.sound, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
