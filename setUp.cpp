@@ -9,8 +9,8 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 
+/******************************INITIALIZE ALLEGRO******************************/
 void initializeAllegro() {
-    // Initialize Allegro
     al_init();
     al_init_font_addon();
     al_init_ttf_addon();
@@ -21,7 +21,7 @@ void initializeAllegro() {
     al_install_audio();
 }
 
-// initializes the sprite names and variable values
+/*****************************INITIALIZE GAME COMPONENTS*********************************/
 void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
     // setting values to variables
     for (int x = 0; x < 9; x++){
@@ -39,11 +39,9 @@ void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
         a[x].potion.pickUp = false;
         a[x].potion.totalAmount = 0;
         a[x].potion.amount = 1;
-        a[x].potion.sound = al_load_sample("pickUp.ogg");
         a[x].heal.filename = "heal.png";
         a[x].heal.pickUp = false;
         a[x].heal.identifier = 3;
-        a[x].heal.sound = al_load_sample("pickUp.ogg");
     }
     le.filename = ("letter.png");
     le.bitmap2 = al_load_bitmap("page.png");
@@ -71,13 +69,15 @@ void setUp (LevelBG a[], Character &b, Object &c, int &l, Item &le){
     }
 }
 
-// loads character image
+/*****************************INITIALIZE GAME COMPONENTS*********************************/
 void loadCharacterImage(Character &a) {
     a.bitmap = al_load_bitmap(a.filename);
     if (a.bitmap == nullptr) {
         printf ("Image %s couldn't load", a.filename);
     }
 }
+
+/*****************************INITIALIZE GAME COMPONENTS*********************************/
 // loads object image
 void loadObjectImage(Object &a) {
     a.bitmap = al_load_bitmap(a.filename);
@@ -86,6 +86,7 @@ void loadObjectImage(Object &a) {
     }
 }
 
+/*****************************INITIALIZE GAME COMPONENTS*********************************/
 void loadItem(Item &a, int x, int y){
     a.bitmap = al_load_bitmap(a.filename);
     if (a.bitmap == nullptr) {
@@ -97,6 +98,7 @@ void loadItem(Item &a, int x, int y){
     a.sound = al_load_sample("pickUp.ogg");
 }
 
+/*****************************INITIALIZE GAME COMPONENTS*********************************/
 void getCharacter(Character &a){
     a.mUp = 0;
     a.mDown = 0;
@@ -105,22 +107,30 @@ void getCharacter(Character &a){
     a.posx = 1070;
     a.posy = 680;
 }
+
+/*****************************INITIALIZE GAME COMPONENTS*********************************/
 //gets starting positions and images from one text file for all objects and characters and loads them
 void getSetUp(LevelBG a[], char b[][120]) {
     FILE *coordinates;
     if (!coordinates){
         printf("Coordinates file couldn't load");
     }
+    // opens text file
     coordinates = fopen ("setUp.txt", "r");
+    // reads in game instructions
     for (int i = 0; i <18; i++){
         fgets( b[i], 120, coordinates);
     }
+    //gets starting positions and images from one text file for all objects and characters and loads them for all 9 levels
     for (int x = 0; x < 9; x++) {
         // chairs
-
+        // getting the amount of chairs
         fscanf(coordinates, "%d", &a[x].chairsF[0].amount);
+        // getting chair coordinates and loading bitmaps for the amount of chairs there are
         for (int i = 0; i <a[x].chairsF[0].amount; i++) {
+            // loads image
             loadObjectImage(a[x].chairsF[i]);
+            // gets x and y coordinates
             fscanf(coordinates, "%d", &a[x].chairsF[i].x);
             fscanf(coordinates, "%d", &a[x].chairsF[i].y);
         }
@@ -151,6 +161,7 @@ void getSetUp(LevelBG a[], char b[][120]) {
             fscanf(coordinates, "%d", &a[x].potion.x);
             fscanf(coordinates, "%d", &a[x].potion.y);
         }
+        // background image
         loadObjectImage(a[x].background);
         fscanf(coordinates, "%d", &a[x].heal.amount);
         for (int i = 0; i < a[x].heal.amount; i++) {
@@ -159,6 +170,7 @@ void getSetUp(LevelBG a[], char b[][120]) {
             fscanf(coordinates, "%d", &a[x].heal.y);
         }
     }
+    // checking bitmap loading for enemy
     if (a[1].enemy[0].amount >0){
         if (!a[1].enemy[0].frame[1]){
             printf("Enemy2 bitmap couldn't load");
@@ -167,20 +179,10 @@ void getSetUp(LevelBG a[], char b[][120]) {
             printf("Enemy bitmap couldn't load");
         }
     }
-
     fclose(coordinates);
 }
-// draws in the hearts and updates them whenever the player loses a life
-void drawLives(Object a) {
-    for(int i = 0; i < 3; i++) {
-        al_draw_scaled_bitmap(a.frame[0],0,0, 224,192,450+(i*80),900,74,64, 0);
-    }
-    for(int i = 0; i < a.amount; i++) {
-        al_draw_scaled_bitmap(a.bitmap,0,0, 224,192,450+(i*80),900,74,64, 0);
-    }
-}
 
-// checks everything in allegro to make sure they opened properly
+/*****************************INITIALIZES/ CHECKS ALLEGRO FEATURES/ ADDONS*********************************/
 void checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *fontPixel, ALLEGRO_TIMER *timer, ALLEGRO_EVENT_QUEUE *event_queue) {
     // Check if your allegro routines worked successfully.
     if (!font) {
@@ -192,6 +194,8 @@ void checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *font
     if (!display) {
         printf("Display couldn't load");
     }
+    // giving display a name
+    al_set_window_title(display, "ROOMS OF KHLORIS");
     // Initialize keyboard routines
     if (!al_install_keyboard()) {
         printf("Keyboard couldn't load");
@@ -200,11 +204,17 @@ void checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font, ALLEGRO_FONT *font
     if (!al_init_image_addon()) {
         printf("Image add on couldn't load");
     }
+    // timer
     if (!timer) {
         printf("Timer couldn't load");
     }
+    // event queue
     if (!event_queue) {
         printf("Event queue couldn't load");
+    }
+    // sound files
+    if (!al_reserve_samples(100)) {
+        printf("samples couldn't reserve\n");
     }
 }
 

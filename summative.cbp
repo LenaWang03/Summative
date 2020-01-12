@@ -32,14 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Collisions.cpp" />
 		<Unit filename="buttons.cpp" />
-		<Unit filename="databaseFunctions.cpp" />
-		<Unit filename="fileFunctions.cpp" />
+		<Unit filename="collisionFunctions.cpp" />
+		<Unit filename="drawFunctions.cpp" />
+		<Unit filename="gamePlayFunctions.cpp" />
 		<Unit filename="headers.h" />
+		<Unit filename="mainFunctionChunks.cpp" />
 		<Unit filename="printFunctions.cpp" />
 		<Unit filename="setUp.cpp" />
-		<Unit filename="summativeAllegro.cpp" />
 		<Unit filename="summativemain.cpp" />
 		<Extensions>
 			<code_completion />
